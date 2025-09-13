@@ -1,0 +1,41 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Proveedores API",
+  "dateExported": "2025-09-13T00:00:00.000Z",
+  "version": "1.1",
+  "requests": [
+    {
+      "name": "Traer todos los proveedores",
+      "url": "http://localhost:3000/proveedores",
+      "method": "GET"
+    },
+    {
+      "name": "Crear proveedor",
+      "url": "http://localhost:3000/proveedores",
+      "method": "POST",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"El Mantel de OZ\",\n  \"servicio\": \"Decoracion\",\n  \"telefono\": \"12345\"\n}"
+      }
+    },
+    {
+      "name": "Traer proveedor por ID",
+      "url": "http://localhost:3000/proveedores/1",
+      "method": "GET"
+    },
+    {
+      "name": "Actualizar proveedor",
+      "url": "http://localhost:3000/proveedores/1",
+      "method": "PUT",
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"telefono\": \"1111111\"\n}"
+      }
+    },
+    {
+      "name": "Eliminar proveedor",
+      "url": "http://localhost:3000/proveedores/1",
+      "method": "DELETE"
+    }
+  ]
+}

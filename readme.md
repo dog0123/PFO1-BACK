@@ -1,9 +1,9 @@
 # PFO 1  
-**Nombre de la materia**  
-**Comisión**  
-**Profesor**  
-**Grupo #**  
-**Integrantes**  
+**Nombre de la materia: Desarrollo Backend**  
+**Comisión: A**  
+**Profesor: Emir Eliezer Garcia Ontiveros  **  
+**Grupo 19**  
+**Integrantes Borcini, Alcira - Cervetti, Diego - Olivera, Sara - Rodriguez, Jonatan**  
 
 ---
 

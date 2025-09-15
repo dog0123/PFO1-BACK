@@ -13,9 +13,9 @@ Este proyecto implementa un **API REST** para gestionar proveedores de una empre
 Está construido con **Node.js** y **Express**, utilizando un archivo `basedatos.json` como "base de datos" persistente (más adelante intentaremos Mongo).  
 
 ### Estructura del proyecto
-- **models/** → define entidad `Proveedor`.  
-- **controllers/** → la lógica de negocio (CRUD de proveedores por ahora).  
-- **routes/** → define las rutas Express para `/proveedores`.  
+- **models/** → define las entidades `Proveedor` y `Evento`.  
+- **controllers/** → contiene la lógica de negocio para `proveedores` y `eventos`.  
+- **routes/** → define las rutas Express para `/proveedores` y `/eventos`.  
 - **db.json** → archivo JSON que hace como base de datos.  
 - **db.js** → módulo que maneja la lectura/escritura de la base de datos.  
 - **server.js** → archivo principal que corre al servidor.  

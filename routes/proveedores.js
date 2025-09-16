@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const proveedorController = require("../controllers/proveedorController");
+const proveedorController = require("../controllers/proveedoresController");
 
 // GET /proveedores trae todos
 router.get("/", proveedorController.traer);

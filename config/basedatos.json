@@ -1,6 +1,22 @@
 {
   "proveedores": [
-    { "id": 1, "nombre": "El pollo loco", "servicio": "Catering", "telefono": "1234" },
-    { "id": 2, "nombre": "PUM S.R.L.", "servicio": "Sonido", "telefono": "5678" }
+    {
+      "id": 2,
+      "nombre": "PUM S.R.L.",
+      "servicio": "Sonido",
+      "telefono": "5678"
+    }
+  ],
+  "eventos": [
+    {
+      "id": 1,
+      "nombre": "Fiesta de Fin de Año",
+      "fecha": "2025-12-15",
+      "lugar": "Gran Salón",
+      "proveedores": [
+        1,
+        2
+      ]
+    }
   ]
 }

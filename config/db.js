@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 // Ruta absoluta al archivo (en el mismo lugar que db.js)
-const DB_FILE = path.join(__dirname, "db.json");
+const DB_FILE = path.join(__dirname, "basedatos.json");
 
 // Leer toda la base de datos
 function load() {

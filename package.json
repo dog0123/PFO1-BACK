@@ -1,10 +1,11 @@
 {
   "name": "pfo1",
   "version": "1.0.0",
-  "description": "",
+  "description": "**Nombre de la materia: Desarrollo Backend**  \r **Comisión: A**  \r **Profesor: Emir Eliezer Garcia Ontiveros**  \r **Grupo 19**  \r **Integrantes Borsini, Alcira - Cervetti, Diego - Olivera, Sara - Rodriguez, Jonatan**",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +13,14 @@
   "dependencies": {
     "express": "^5.1.0",
     "mongoose": "^8.18.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dog0123/PFO1-BACK.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dog0123/PFO1-BACK/issues"
+  },
+  "homepage": "https://github.com/dog0123/PFO1-BACK#readme"
 }

@@ -8,6 +8,17 @@ const eventoRoutes = require("./routes/eventos");
 const app = express();
 app.use(bodyParser.json());
 
+app.set('view engine', 'pug');
+app.set('views', './views');
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+app.post('/respuesta', (req,res) => {
+  const {nombre} =req.body;
+  res.render('respuesta', {nombre});
+});
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);

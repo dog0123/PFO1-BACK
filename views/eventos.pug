@@ -1,0 +1,11 @@
+html
+    head
+    title Eventos
+    body
+        h1 Lista de Eventos
+        ul
+            each evento in eventos 
+                li
+                p= evento.nombre
+                p= evento.fecha
+                p= evento.lugar

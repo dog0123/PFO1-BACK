@@ -17,6 +17,15 @@
         1,
         2
       ]
+    },
+    {
+      "id": 2,
+      "nombre": "Cumpleañitos",
+      "fecha": "2025-12-15",
+      "lugar": "Salón de cumpleaños",
+      "proveedores": [     
+        2
+      ]
     }
   ]
 }

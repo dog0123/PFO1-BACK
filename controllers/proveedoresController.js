@@ -1,7 +1,7 @@
 // La lógica para manejar el CRUD con los proveedores
 
-const db = require("../config/db");
-const Proveedor = require("../models/Proveedor");
+import db from "../config/db.js";
+import Proveedor from "../models/Proveedor.js";
 
 // Traer todos los proveedores
 function traer(req, res) {
@@ -63,4 +63,5 @@ function eliminar(req, res) {
   res.status(204).end();
 }
 
-module.exports = { traer, obtenerPorId, crear, actualizar, eliminar };
+const proveedoresController = { traer, obtenerPorId, crear, actualizar, eliminar };
+export default proveedoresController;

@@ -1,6 +1,6 @@
 // models/Evento.js
 
-const db = require("../config/db");
+import db from '../config/db.js'
 
 function generarNuevoId() {
   const eventos = db.getCollection("eventos");
@@ -18,4 +18,4 @@ class Evento {
   }
 }
 
-module.exports = Evento;
+export default Evento;

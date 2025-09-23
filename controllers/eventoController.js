@@ -1,7 +1,7 @@
 // controllers/eventoController.js
 
-const db = require("../config/db");
-const Evento = require("../models/Evento");
+import db from "../config/db.js";
+import Evento from "../models/Evento.js";
 
 // GET /eventos
 function traer(req, res) {
@@ -105,7 +105,7 @@ function obtenerEventoCompleto(req, res) {
   res.json(eventoCompleto);
 }
 
-module.exports = {
+const eventoController = {
   traer,
   obtenerPorId,
   crear,
@@ -113,4 +113,6 @@ module.exports = {
   eliminar,
   traerConProveedores,
   obtenerEventoCompleto
-};
+}
+
+export default eventoController;

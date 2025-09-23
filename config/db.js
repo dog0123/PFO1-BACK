@@ -1,7 +1,11 @@
 // Maneja el archivo JSON como si fuera una base de datos
 
-const fs = require("fs");
-const path = require("path");
+import fs from 'fs';
+import path from 'path'
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Ruta absoluta al archivo (en el mismo lugar que db.js)
 const DB_FILE = path.join(__dirname, "basedatos.json");
@@ -31,4 +35,6 @@ function setCollection(name, collection) {
   save(db);
 }
 
-module.exports = { getCollection, setCollection };
+const db = {getCollection, setCollection}
+
+export default db;

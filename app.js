@@ -18,6 +18,12 @@ app.post('/eventos', (req,res) => {
   const eventos = db.getCollection("eventos");
   res.render('eventos', {eventos});
 });
+
+app.post('/proveedores', (req, res) => {
+  const proveedores = db.getCollection('proveedores');
+  res.render('proveedores', {proveedores});
+});
+
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);

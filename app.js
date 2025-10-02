@@ -14,13 +14,13 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.post('/eventos', (req,res) => {
-  const eventos = db.getCollection("eventos");
+app.post('/eventos', async (req,res) => {
+  const eventos = await db.getCollection("eventos");
   res.render('eventos', {eventos});
 });
 
-app.post('/proveedores', (req, res) => {
-  const proveedores = db.getCollection('proveedores');
+app.post('/proveedores', async (req, res) => {
+  const proveedores = await db.getCollection('proveedores');
   res.render('proveedores', {proveedores});
 });
 

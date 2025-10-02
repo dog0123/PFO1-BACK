@@ -4,15 +4,15 @@ import db from "../config/db.js";
 import Proveedor from "../models/Proveedor.js";
 
 // Traer todos los proveedores
-function traer(req, res) {
-  const proveedores = db.getCollection("proveedores");
+async function traer(req, res) {
+  const proveedores = await db.getCollection("proveedores");
   res.json(proveedores);
 }
 
 // Buscar proveedor por ID
-function obtenerPorId(req, res) {
+async function obtenerPorId(req, res) {
   const id = parseInt(req.params.id);
-  const proveedores = db.getCollection("proveedores");
+  const proveedores = await db.getCollection("proveedores");
   const proveedor = proveedores.find((p) => p.id === id);
 
   if (proveedor) {
@@ -23,8 +23,8 @@ function obtenerPorId(req, res) {
 }
 
 // Crear nuevo proveedor
-function crear(req, res) {
-  const proveedores = db.getCollection("proveedores");
+async function crear(req, res) {
+  const proveedores = await db.getCollection("proveedores");
 
   const nuevoProveedor = new Proveedor(req.body); // Le pasamos los datos por POST en el body
   proveedores.push(nuevoProveedor);
@@ -35,9 +35,9 @@ function crear(req, res) {
 }
 
 // Actualizar proveedor existente
-function actualizar(req, res) {
+async function actualizar(req, res) {
   const id = parseInt(req.params.id);
-  let proveedores = db.getCollection("proveedores");
+  let proveedores = await db.getCollection("proveedores");
   const index = proveedores.findIndex((p) => p.id === id);
 
   if (index !== -1) {
@@ -50,9 +50,9 @@ function actualizar(req, res) {
 }
 
 // Eliminar un proveedor
-function eliminar(req, res) {
+async function eliminar(req, res) {
   const id = parseInt(req.params.id);
-  let proveedores = db.getCollection("proveedores");
+  let proveedores = await db.getCollection("proveedores");
   const filtrados = proveedores.filter((p) => p.id !== id); // De todos los proveedores filtramos a uno
 
   if (proveedores.length === filtrados.length) { // Si la cantidad no es la misma no se encontro

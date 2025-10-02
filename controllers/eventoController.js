@@ -4,15 +4,16 @@ import db from "../config/db.js";
 import Evento from "../models/Evento.js";
 
 // GET /eventos
-function traer(req, res) {
-  const eventos = db.getCollection("eventos");
+async function traer(req, res) {
+  const eventos = await db.getCollection("eventos");
+  console.log(eventos);
   res.json(eventos);
 }
 
 // GET /eventos/:id
-function obtenerPorId(req, res) {
+async function obtenerPorId(req, res) {
   const id = parseInt(req.params.id);
-  const eventos = db.getCollection("eventos");
+  const eventos = await db.getCollection("eventos");
   const evento = eventos.find(e => e.id === id);
 
   if (evento) {
@@ -23,8 +24,8 @@ function obtenerPorId(req, res) {
 }
 
 // POST /eventos
-function crear(req, res) {
-  const eventos = db.getCollection("eventos");
+async function crear(req, res) {
+  const eventos = await db.getCollection("eventos");
 
   const nuevoEvento = new Evento(req.body);
   eventos.push(nuevoEvento);
@@ -34,9 +35,9 @@ function crear(req, res) {
 }
 
 // PUT /eventos/:id
-function actualizar(req, res) {
+async function actualizar(req, res) {
   const id = parseInt(req.params.id);
-  let eventos = db.getCollection("eventos");
+  let eventos = await db.getCollection("eventos");
   const index = eventos.findIndex(e => e.id === id);
 
   if (index !== -1) {
@@ -49,9 +50,9 @@ function actualizar(req, res) {
 }
 
 // DELETE /eventos/:id
-function eliminar(req, res) {
+async function eliminar(req, res) {
   const id = parseInt(req.params.id);
-  let eventos = db.getCollection("eventos");
+  let eventos = await db.getCollection("eventos");
   const filtrados = eventos.filter(e => e.id !== id);
 
   if (eventos.length === filtrados.length) {
@@ -63,9 +64,9 @@ function eliminar(req, res) {
 }
 
 // GET /eventos/completos
-function traerConProveedores(req, res) {
-  const eventos = db.getCollection("eventos");
-  const proveedores = db.getCollection("proveedores");
+async function traerConProveedores(req, res) {
+  const eventos = await db.getCollection("eventos");
+  const proveedores = await db.getCollection("proveedores");
 
   const eventosCompletos = eventos.map(evento => {
     const proveedoresAsignados = evento.proveedores.map(id =>
@@ -82,10 +83,10 @@ function traerConProveedores(req, res) {
 }
 
 // GET /eventos/:id/completo
-function obtenerEventoCompleto(req, res) {
+async function obtenerEventoCompleto(req, res) {
   const id = parseInt(req.params.id);
-  const eventos = db.getCollection("eventos");
-  const proveedores = db.getCollection("proveedores");
+  const eventos = await db.getCollection("eventos");
+  const proveedores = await db.getCollection("proveedores");
 
   const evento = eventos.find(e => e.id === id);
 

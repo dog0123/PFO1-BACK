@@ -41,3 +41,69 @@ async function actualizar(req, res) {
     }
 }
 
+async function eliminar(req, res) {
+    const id = parseInt(req.params.id);
+    let clientes = await db.getCollection("clientes");
+    const filtrados = clientes.filter((c) => c.id !== id);
+
+    if(clientes.length === filtrados.length){
+        return res.status(404).json( {error: "cliente no encontrado"} );
+    }
+
+    db.setCollection("eventos", filtrados);
+    res.status(204).end();
+}
+
+async function traerConEventos(req, res) {
+    const clientes = await db.getCollection("clientes");
+    const eventos = await db.getCollection("eventos");
+
+    const clientesCompletos = clientes.map(cliente => {
+        const eventosAsignados = cliente.eventos.map(id =>
+            eventos.find((e) => e.id === id)
+        ).filter((e) => e !== undefined);
+
+        return {
+            ...cliente,
+            eventos: eventosAsignados
+        };
+    }
+    );
+    res.json(clientesCompletos);
+}
+
+async function obtenerClienteCompleto(req, res) {
+    const id = parseInt(req.params.id);
+    const clientes = await db.getCollection("clientes");
+    const eventos = await db.getCollection("eventos");
+
+    const cliente = cliente.find((c) => c.id === id);
+
+    if(!cliente){
+        return res.status(404).json( {error: "Cliente no encontrado"} );
+    }
+
+    const eventosAsignados = cliente.eventos.map(id =>
+        eventos.find((e) => e.id === id)
+    ).filter((p) => p.id !== undefined);
+
+    const clienteCompleto = {
+        ...cliente,
+        evento: eventosAsignados
+    };
+
+    res.json(clienteCompleto);
+}
+
+const clienteController = {
+    traer,
+    obtenerPorId,
+    crear,
+    actualizar,
+    eliminar,
+    traerConEventos,
+    obtenerClienteCompleto
+}
+
+export default clienteController;
+

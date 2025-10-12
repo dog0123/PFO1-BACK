@@ -2,10 +2,10 @@
 
 import db from '../config/db.js'
 
-function generarNuevoId() {
+function generarNuevoId() { 
   const eventos = db.getCollection("eventos");
   const ids = eventos.map(e => e.id);
-  return ids.length > 0 ? Math.max(...ids) + 1 : 1;
+      return ids.length > 0 ? Math.max(...ids) + 1 : 1;
 }
 
 class Evento {

@@ -27,5 +27,17 @@
         2
       ]
     }
+  ],
+
+  "clientes":[
+    {
+      "id": 1,
+      "nombre": "sara",
+      "telefono": "77777",
+      "email": "sara@mail.com",
+      "eventos":[
+        2
+      ]
+    }
   ]
 }

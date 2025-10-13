@@ -1,5 +1,6 @@
-import db from '../config/db';
-import Cliente from '../models/Cliente';
+import { json } from 'express';
+import db from '../config/db.js';
+import Cliente from '../models/Cliente.js';
 
 //GET Cliente
 async function traer(req, res) {
@@ -35,7 +36,8 @@ async function actualizar(req, res) {
 
     if(index !== -1){
         clientes[index] = { ...clientes[index], ...req.body };
-        db.setCollection(clientes[index]);
+        db.setCollection("clientes", clientes);
+        res.json(clientes[index]);
     }else{
         res.status(404).json( {error: "Cliente no encontrado"});
     }
@@ -50,7 +52,7 @@ async function eliminar(req, res) {
         return res.status(404).json( {error: "cliente no encontrado"} );
     }
 
-    db.setCollection("eventos", filtrados);
+    db.setCollection("clientes", filtrados);
     res.status(204).end();
 }
 
@@ -77,7 +79,7 @@ async function obtenerClienteCompleto(req, res) {
     const clientes = await db.getCollection("clientes");
     const eventos = await db.getCollection("eventos");
 
-    const cliente = cliente.find((c) => c.id === id);
+    const cliente = clientes.find((c) => c.id === id);
 
     if(!cliente){
         return res.status(404).json( {error: "Cliente no encontrado"} );

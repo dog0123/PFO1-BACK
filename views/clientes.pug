@@ -1,0 +1,11 @@
+html 
+    head
+    title Clientes
+    body
+        h1 Lista de Clientes
+        ul 
+            each cliente in clientes 
+                li 
+                p= cliente.nombre
+                p= cliente.telefono
+                p= cliente.email

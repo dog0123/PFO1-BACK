@@ -1,4 +1,4 @@
-import db from '../config/db';
+import db from '../config/db.js';
 
 function generarIdCliente(){
     const clientes = db.getCollection('clientes');

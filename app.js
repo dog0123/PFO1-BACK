@@ -3,6 +3,7 @@
 import express from 'express';
 import proveedorRoutes from './routes/proveedores.js';
 import eventoRoutes from './routes/eventos.js';
+import clienteRoutes from './routes/clientes.js';
 import db from './config/db.js';
 
 const app = express();
@@ -24,9 +25,15 @@ app.post('/proveedores', async (req, res) => {
   res.render('proveedores', {proveedores});
 });
 
+app.post('/clientes', async(req, res) => {
+  const clientes = await db.getCollection('clientes');
+  res.render('clientes', {clientes});
+})
+
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);
+app.use("/clientes", clienteRoutes);
 
 // Arranca el servidor
 const PORT = 3000;

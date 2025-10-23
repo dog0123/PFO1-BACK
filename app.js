@@ -17,6 +17,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
+/*
 app.post('/eventos', async (req,res) => {
   const eventos = await db.getCollection("eventos");
   res.render('eventos', {eventos});
@@ -26,6 +27,7 @@ app.post('/proveedores', async (req, res) => {
   const proveedores = await db.getCollection('proveedores');
   res.render('proveedores', {proveedores});
 });
+*/
 
 // Rutas
 app.use("/proveedores", proveedorRoutes);

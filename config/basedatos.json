@@ -5,6 +5,9 @@
       "nombre": "PUM S.R.L.",
       "servicio": "Sonido",
       "telefono": "5678"
+    },
+    {
+      "id": 1761235284781
     }
   ],
   "eventos": [
@@ -25,24 +28,6 @@
       "lugar": "Salón de cumpleaños",
       "proveedores": [
         2
-      ]
-    },
-    {
-      "id": 3,
-      "nombre": "Papelon",
-      "fecha": "algun dia",
-      "lugar": "Por aca",
-      "proveedores": [
-        1
-      ]
-    },
-    {
-      "id": {},
-      "nombre": "Papelonazoooooo",
-      "fecha": "algun dia",
-      "lugar": "Por aca",
-      "proveedores": [
-        1
       ]
     }
   ]

@@ -7,7 +7,16 @@
       "telefono": "5678"
     },
     {
-      "id": 1761235284781
+      "id": 1,
+      "nombre": "Catering Fantasía",
+      "servicio": "Comida y Bebida",
+      "telefono": "1234"
+    },
+    {
+      "id": 1761235284781,
+      "nombre": "Iluminación Show",
+      "servicio": "Iluminación",
+      "telefono": "9988"
     }
   ],
   "eventos": [
@@ -17,8 +26,9 @@
       "fecha": "2025-12-15",
       "lugar": "Gran Salón",
       "proveedores": [
+        2,
         1,
-        2
+        1761235284781 
       ]
     },
     {
@@ -28,6 +38,36 @@
       "lugar": "Salón de cumpleaños",
       "proveedores": [
         2
+      ]
+    }
+  ],
+  "presupuestos": [
+    {
+      "id": 101,
+      "eventoId": 1, 
+      "nombre": "Presupuesto Fiesta de Fin de Año - Consolidado",
+      "fechaEmision": "2025-10-24",
+      "estado": "Pendiente de Aprobación",
+      "totalGeneral": 23500,
+      "items": [
+        {
+          "descripcion": "Alquiler de equipo de sonido completo (PUM S.R.L.)",
+          "proveedorId": 2,
+          "cantidad": 1,
+          "precioUnitario": 5000
+        },
+        {
+          "descripcion": "Menú VIP por persona (Catering Fantasía)",
+          "proveedorId": 1,
+          "cantidad": 100,
+          "precioUnitario": 150
+        },
+        {
+          "descripcion": "Instalación y soporte de iluminación (Iluminación Show)",
+          "proveedorId": 1761235284781,
+          "cantidad": 1,
+          "precioUnitario": 7500
+        }
       ]
     }
   ]

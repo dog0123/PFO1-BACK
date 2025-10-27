@@ -14,7 +14,7 @@ class Evento {
     this.nombre = nombre;
     this.fecha = fecha;
     this.lugar = lugar;
-    this.proveedores = proveedores; // array de ID nada mass
+    this.proveedores = proveedores; // array de ID nada mas
   }
 }
 

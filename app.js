@@ -8,12 +8,14 @@ import db from './config/db.js';
 
 const app = express();
 
+app.use(express.json());
 app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.get('/', (req, res) => {
   res.render('index');
 });
+
 
 app.post('/eventos', async (req,res) => {
   const eventos = await db.getCollection("eventos");

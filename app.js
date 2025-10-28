@@ -3,7 +3,7 @@
 import express from 'express';
 import proveedorRoutes from './routes/proveedores.js';
 import eventoRoutes from './routes/eventos.js';
-import clienteRoutes from './routes/clientes.js';
+import presupuestoRoutes from './routes/presupuestos.js'; // <-- NUEVA IMPORTACIÓN
 import db from './config/db.js';
 
 const app = express();
@@ -15,18 +15,18 @@ app.set('view engine', 'pug');
 app.set('views', './views');
 
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('index');
 });
 
 /*
 app.post('/eventos', async (req,res) => {
-  const eventos = await db.getCollection("eventos");
-  res.render('eventos', {eventos});
+  const eventos = await db.getCollection("eventos");
+  res.render('eventos', {eventos});
 });
 
 app.post('/proveedores', async (req, res) => {
-  const proveedores = await db.getCollection('proveedores');
-  res.render('proveedores', {proveedores});
+  const proveedores = await db.getCollection('proveedores');
+  res.render('proveedores', {proveedores});
 });
 */
 
@@ -38,11 +38,10 @@ app.post('/clientes', async(req, res) => {
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);
-app.use("/clientes", clienteRoutes);
+app.use("/presupuestos", presupuestoRoutes); // <-- NUEVA RUTA AGREGADA
 
 // Arranca el servidor
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor arriba en http://localhost:${PORT}`);
+  console.log(`Servidor arriba en http://localhost:${PORT}`);
 });
-

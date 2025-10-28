@@ -2,8 +2,8 @@
 
 import db from '../config/db.js'
 
-function generarNuevoId() { 
-  const eventos = db.getCollection("eventos");
+async function generarNuevoId() {
+  const eventos = await db.getCollection("eventos");
   const ids = eventos.map(e => e.id);
       return ids.length > 0 ? Math.max(...ids) + 1 : 1;
 }

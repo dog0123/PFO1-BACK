@@ -1,4 +1,4 @@
-// Correr este archivo con el comando node server.js en la terminal
+// Correr este archivo con el comando node app.js en la terminal
 
 import express from 'express';
 import proveedorRoutes from './routes/proveedores.js';
@@ -9,6 +9,8 @@ import db from './config/db.js';
 const app = express();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.set('view engine', 'pug');
 app.set('views', './views');
 
@@ -16,7 +18,7 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
+/*
 app.post('/eventos', async (req,res) => {
   const eventos = await db.getCollection("eventos");
   res.render('eventos', {eventos});
@@ -26,6 +28,7 @@ app.post('/proveedores', async (req, res) => {
   const proveedores = await db.getCollection('proveedores');
   res.render('proveedores', {proveedores});
 });
+*/
 
 app.post('/clientes', async(req, res) => {
   const clientes = await db.getCollection('clientes');

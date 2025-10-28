@@ -5,6 +5,9 @@
       "nombre": "PUM S.R.L.",
       "servicio": "Sonido",
       "telefono": "5678"
+    },
+    {
+      "id": 1761235284781
     }
   ],
   "eventos": [
@@ -23,7 +26,7 @@
       "nombre": "Cumpleañitos",
       "fecha": "2025-12-15",
       "lugar": "Salón de cumpleaños",
-      "proveedores": [     
+      "proveedores": [
         2
       ]
     }

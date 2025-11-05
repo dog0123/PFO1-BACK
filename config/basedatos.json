@@ -3,19 +3,22 @@
     {
       "id": 2,
       "nombre": "PUM S.R.L.",
-      "servicio": "Sonido",
+      "descripcion": "Sonido",
+      "servicios": ["Alquiler de equipo de sonido completo"],
       "telefono": "5678"
     },
     {
       "id": 1,
       "nombre": "Catering Fantasía",
-      "servicio": "Comida y Bebida",
+      "descripcion": "Comida y Bebida",
+      "servicios": ["Menú VIP por persona"],
       "telefono": "1234"
     },
     {
       "id": 1761235284781,
       "nombre": "Iluminación Show",
-      "servicio": "Iluminación",
+      "descripcion": "Iluminación",
+      "servicios": ["Instalación y soporte de iluminación"],
       "telefono": "9988"
     }
   ],
@@ -28,7 +31,7 @@
       "proveedores": [
         2,
         1,
-        1761235284781 
+        1761235284781
       ]
     },
     {
@@ -39,12 +42,28 @@
       "proveedores": [
         2
       ]
+    },
+    {
+      "id": {},
+      "proveedores": []
+    },
+    {
+      "id": {},
+      "proveedores": []
+    },
+    {
+      "id": {},
+      "proveedores": []
+    },
+    {
+      "id": {},
+      "proveedores": []
     }
   ],
   "presupuestos": [
     {
       "id": 101,
-      "eventoId": 1, 
+      "eventoId": 1,
       "nombre": "Presupuesto Fiesta de Fin de Año - Consolidado",
       "fechaEmision": "2025-10-24",
       "estado": "Pendiente de Aprobación",

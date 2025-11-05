@@ -3,7 +3,8 @@
 import express from 'express';
 import proveedorRoutes from './routes/proveedores.js';
 import eventoRoutes from './routes/eventos.js';
-import presupuestoRoutes from './routes/presupuestos.js'; // <-- NUEVA IMPORTACIÓN
+import presupuestoRoutes from './routes/presupuestos.js';
+import clienteRoutes from './routes/clientes.js';
 import db from './config/db.js';
 
 const app = express();
@@ -19,6 +20,9 @@ app.get('/', (req, res) => {
 });
 
 /* 
+=======
+
+>>>>>>> origin/sara
 app.post('/eventos', async (req,res) => {
   const eventos = await db.getCollection("eventos");
   res.render('eventos', {eventos});
@@ -30,10 +34,16 @@ app.post('/proveedores', async (req, res) => {
 });
 */
 
+app.post('/clientes', async(req, res) => {
+  const clientes = await db.getCollection('clientes');
+  res.render('clientes', {clientes});
+})
+
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);
-app.use("/presupuestos", presupuestoRoutes); // <-- NUEVA RUTA AGREGADA
+app.use("/presupuestos", presupuestoRoutes);
+app.use("/clientes", clienteRoutes);
 
 // Arranca el servidor
 const PORT = 3000;

@@ -89,5 +89,27 @@
         }
       ]
     }
+  ],
+
+  "clientes":[
+    {
+      "id": 1,
+      "nombre": "sara",
+      "telefono": "77777",
+      "email": "sara@mail.com",
+      "eventos":[
+        2
+      ]
+    },
+    {
+      "id": 2,
+      "nombre": "ema",
+      "telefono": "12345",
+      "email": "ema@mail.com",
+      "eventos":[
+        1
+      ]
+      
+    }
   ]
 }

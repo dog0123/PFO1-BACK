@@ -1,12 +1,20 @@
-import express from 'express';
-import presupuestosController from '../controllers/presupuestosController.js';
+// routes/presupuestos.js
+import express from "express";
+import {
+  listarPresupuestos,
+  obtenerPresupuesto,
+  crearPresupuesto,
+  actualizarPresupuesto,
+  eliminarPresupuesto
+} from "../controllers/presupuestosController.js";
 
 const router = express.Router();
 
-router.get('/', presupuestosController.traer);          // GET /api/presupuestos
-router.get('/:id', presupuestosController.obtenerPorId); // GET /api/presupuestos/:id
-router.post('/', presupuestosController.crear);         // POST /api/presupuestos
-router.put('/:id', presupuestosController.actualizar);  // PUT /api/presupuestos/:id
-router.delete('/:id', presupuestosController.eliminar); // DELETE /api/presupuestos/:id
+// CRUD principal
+router.get("/", listarPresupuestos);        // Listar todos los presupuestos
+router.get("/:id", obtenerPresupuesto);     // Buscar por ID
+router.post("/", crearPresupuesto);         // Crear nuevo
+router.put("/:id", actualizarPresupuesto);  // Actualizar existente
+router.delete("/:id", eliminarPresupuesto); // Eliminar
 
 export default router;

@@ -1,12 +1,14 @@
-// Entidad para proveedores
+// models/Proveedor.js
+import mongoose from "mongoose";
 
-class Proveedor {
-  constructor({ id, nombre, servicio, telefono }) {
-    this.id = id || Date.now(); // Genera un ID único si no se pasa asi no se rompe la base
-    this.nombre = nombre;
-    this.servicio = servicio;
-    this.telefono = telefono;
-  }
-}
+// Definimos el esquema de cómo será cada documneto "Proveedor"
+const proveedorSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },     // Nombre del proveedor 
+  servicio: { type: String, required: true },   // Qué servicio brinda (ej: "catering", "música", "fotografía")
+  telefono: { type: String, default: "" },      // Teléfono de contacto (opcional)
+  email: { type: String, default: "" },         // Correo de contacto (opcional)
+  direccion: { type: String, default: "" }      // Dirección física (opcional)
+}, { timestamps: true });
 
-export default Proveedor;
+// Exportamos el modelo "Proveedor" para poder usarlo en los controladores
+export default mongoose.model("Proveedor", proveedorSchema);

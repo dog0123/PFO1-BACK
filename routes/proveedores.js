@@ -1,14 +1,21 @@
-// Define las rutas para Express.
-
-import express from 'express'
-import proveedorController from "../controllers/proveedoresController.js";
+// routes/proveedores.js
+import express from "express";
+import {
+  listarProveedores,
+  obtenerProveedor,
+  crearProveedor,
+  actualizarProveedor,
+  eliminarProveedor
+} from "../controllers/proveedoresController.js";
 
 const router = express.Router();
 
-router.get("/", proveedorController.traer);
-router.get("/:id", proveedorController.obtenerPorId);
-router.post("/", proveedorController.crear);
-router.put("/:id", proveedorController.actualizar);
-router.delete("/:id", proveedorController.eliminar);
+// Endpoints CRUD
+router.get("/", listarProveedores);         // Mostrar todos
+router.get("/:id", obtenerProveedor);       // Buscar un proveedor por id
+router.post("/", crearProveedor);           // Crear nuevo proveedor
+router.put("/:id", actualizarProveedor);    // Actualizar registro
+router.delete("/:id", eliminarProveedor);   // Eliminar registro
 
 export default router;
+

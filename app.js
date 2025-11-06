@@ -3,15 +3,16 @@
 import express from 'express';
 import 'dotenv/config'; // carga variables del archivo .env
 import connectDB from './config/mongo.js'; // conexión a Mongo
-import db from './config/db.js'; // conexión antigua JSON (por compatibilidad)
+import db from './config/db.js'; // conexión antigua JSON (para compatibilidad)
 
-// Importa las rutas de TODOS los módulos
+// Importa las rutas de TODOS los módulos hechos
 import proveedorRoutes from './routes/proveedores.js';
 import eventoRoutes from './routes/eventos.js';
 import presupuestoRoutes from './routes/presupuestos.js';
 import tareasRoutes from './routes/tareas.js';
-//import clienteRoutes from './routes/clientes.js';   // falta Sari
-//import invitadoRoutes from './routes/invitados.js'; // falta no se si JOni
+import clienteRoutes from './routes/clientes.js'; 
+import invitadoRoutes from './routes/invitados.js';
+
 
 const app = express();
 
@@ -36,8 +37,8 @@ app.use('/proveedores', proveedorRoutes);
 app.use('/eventos', eventoRoutes);
 app.use('/presupuestos', presupuestoRoutes);
 app.use('/tareas', tareasRoutes);
-//app.use('/clientes', clienteRoutes);
-//app.use('/invitados', invitadoRoutes);
+app.use('/clientes', clienteRoutes);
+app.use('/invitados', invitadoRoutes);
 
 // Ruta raíz
 app.get('/', (req, res) => {

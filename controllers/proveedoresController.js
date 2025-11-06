@@ -1,67 +1,56 @@
-// La lógica para manejar el CRUD con los proveedores
-
-import db from "../config/db.js";
+// controllers/proveedorController.js
 import Proveedor from "../models/Proveedor.js";
 
-// Traer todos los proveedores
-async function traer(req, res) {
-  const proveedores = await db.getCollection("proveedores");
-  res.json(proveedores);
-}
-
-// Buscar proveedor por ID
-async function obtenerPorId(req, res) {
-  const id = parseInt(req.params.id);
-  const proveedores = await db.getCollection("proveedores");
-  const proveedor = proveedores.find((p) => p.id === id);
-
-  if (proveedor) {
-    res.json(proveedor);
-  } else {
-    res.status(404).json({ error: "Proveedor no encontrado" });
+// Lista de todos los proveedores
+export const listarProveedores = async (req, res) => {
+  try {
+    const proveedores = await Proveedor.find();
+    res.status(200).json(proveedores);
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al listar proveedores", error });
   }
-}
+};
 
-// Crear nuevo proveedor
-async function crear(req, res) {
-  const proveedores = await db.getCollection("proveedores");
-
-  const nuevoProveedor = new Proveedor(req.body); // Le pasamos los datos por POST en el body
-  proveedores.push(nuevoProveedor);
-
-  db.setCollection("proveedores", proveedores);
-
-  res.status(201).json(nuevoProveedor);
-}
-
-// Actualizar proveedor existente
-async function actualizar(req, res) {
-  const id = parseInt(req.params.id);
-  let proveedores = await db.getCollection("proveedores");
-  const index = proveedores.findIndex((p) => p.id === id);
-
-  if (index !== -1) {
-    proveedores[index] = { ...proveedores[index], ...req.body };
-    db.setCollection("proveedores", proveedores);
-    res.json(proveedores[index]);
-  } else {
-    res.status(404).json({ error: "Proveedor no encontrado" });
+// Obtener un proveedor por ID
+export const obtenerProveedor = async (req, res) => {
+  try {
+    const proveedor = await Proveedor.findById(req.params.id);
+    if (!proveedor) return res.status(404).json({ mensaje: "Proveedor no encontrado" });
+    res.status(200).json(proveedor);
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al obtener proveedor", error });
   }
-}
+};
+
+// Crear un nuevo proveedor
+export const crearProveedor = async (req, res) => {
+  try {
+    const nuevoProveedor = new Proveedor(req.body);
+    await nuevoProveedor.save();
+    res.status(201).json(nuevoProveedor);
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error al crear proveedor", error });
+  }
+};
+
+// Actualizar un proveedor existente
+export const actualizarProveedor = async (req, res) => {
+  try {
+    const actualizado = await Proveedor.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!actualizado) return res.status(404).json({ mensaje: "Proveedor no encontrado" });
+    res.status(200).json(actualizado);
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error al actualizar proveedor", error });
+  }
+};
 
 // Eliminar un proveedor
-async function eliminar(req, res) {
-  const id = parseInt(req.params.id);
-  let proveedores = await db.getCollection("proveedores");
-  const filtrados = proveedores.filter((p) => p.id !== id); // De todos los proveedores filtramos a uno
-
-  if (proveedores.length === filtrados.length) { // Si la cantidad no es la misma no se encontro
-    return res.status(404).json({ error: "Proveedor no encontrado" });
+export const eliminarProveedor = async (req, res) => {
+  try {
+    const eliminado = await Proveedor.findByIdAndDelete(req.params.id);
+    if (!eliminado) return res.status(404).json({ mensaje: "Proveedor no encontrado" });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al eliminar proveedor", error });
   }
-
-  db.setCollection("proveedores", filtrados);
-  res.status(204).end();
-}
-
-const proveedoresController = { traer, obtenerPorId, crear, actualizar, eliminar };
-export default proveedoresController;
+};

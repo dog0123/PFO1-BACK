@@ -1,7 +1,18 @@
-block contenido
-  h2 Eventify
-  form(action='/eventos' method="POST")    
-    button(type='submit') Eventos
-  
-  form(action='/proveedores', method="post") 
-    button(type='submit') Proveedores
+extends layout
+
+block content
+  .container.text-center.mt-5
+    h1.text-primary.mb-4 Bienvenido a Eventify 
+    p.lead Gestioná eventos, invitados, presupuestos y tareas desde un solo lugar.
+
+    //- Botones principales 
+    .d-grid.gap-3.col-6.mx-auto.mt-5
+      a.btn.btn-outline-primary.btn-lg(href="/eventos") Eventos
+      a.btn.btn-outline-success.btn-lg(href="/clientes") Clientes
+      a.btn.btn-outline-warning.btn-lg(href="/proveedores") Proveedores
+      a.btn.btn-outline-info.btn-lg(href="/tareas/vista") Tareas
+      a.btn.btn-outline-dark.btn-lg(href="/presupuestos") Presupuestos
+      a.btn.btn-outline-secondary.btn-lg(href="/invitados") Invitados
+
+    hr.mt-5
+    p.text-muted.mt-3 Creado por el equipo PF01 - Grupo 19

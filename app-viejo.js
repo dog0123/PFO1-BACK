@@ -33,7 +33,7 @@ app.post('/proveedores', async (req, res) => {
 // Rutas
 app.use("/proveedores", proveedorRoutes);
 app.use("/eventos", eventoRoutes);
-app.use("/presupuestos", presupuestoRoutes); // <-- NUEVA RUTA AGREGADA
+app.use("/presupuestos", presupuestoRoutes); 
 
 // Arranca el servidor
 const PORT = 3000;

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= titulo
+  form(method="post", action=action)
+    div
+      label(for="titulo") Título:
+      input(type="text", name="titulo", id="titulo", value=(tarea && tarea.titulo))
+    br
+    div
+      label(for="descripcion") Descripción:
+      textarea(name="descripcion") #{tarea && tarea.descripcion}
+    br
+    div
+      label(for="eventoId") Evento (ID):
+      input(type="text", name="eventoId", id="eventoId", value=(tarea && tarea.eventoId))
+    br
+    div
+      label(for="responsable") Responsable:
+      input(type="text", name="responsable", id="responsable", value=(tarea && tarea.responsable))
+    br
+    button(type="submit") Enviar
+

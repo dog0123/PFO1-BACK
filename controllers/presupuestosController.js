@@ -1,134 +1,132 @@
-import db from "../config/db.js";
+// controllers/presupuestosController.js
+import Presupuesto from "../models/Presupuesto.js";
 
-// Calcula el total sumando el costo de todos los items.
+// Calcula el total sumas de cantidad * precioUnitario
 const calcularTotal = (items) => {
-  if (!items || items.length === 0) return 0;
-  
-  return items.reduce((acc, item) => {
-    const cantidad = parseFloat(item.cantidad) || 0;
-    const precio = parseFloat(item.precioUnitario) || 0;
-    return acc + (cantidad * precio);
-  }, 0);
+  if (!items || items.length === 0) return 0;
+  return items.reduce((acc, item) => {
+    const cantidad = parseFloat(item.cantidad) || 0;
+    const precio = parseFloat(item.precioUnitario) || 0;
+    return acc + cantidad * precio;
+  }, 0);
 };
 
+// Calcular ingresos, gastos y saldo
+const calcularDetallesFinancieros = (items) => {
+  const totalGastos = items
+    .filter(item => item.tipo === "gasto")
+    .reduce((a, i) => a + (i.cantidad * i.precioUnitario), 0);
 
-const generarPresupuestoCompleto = (presupuesto, proveedores) => {
-  if (!presupuesto || !presupuesto.items) return presupuesto;
-  
-  const presupuestoCompleto = { ...presupuesto };
-  
-  presupuestoCompleto.items = presupuestoCompleto.items.map(item => {
-    const proveedor = proveedores.find(p => p.id === parseInt(item.proveedorId));
-    
-    return {
-      ...item,
-      proveedor: proveedor 
-        ? { id: proveedor.id, nombre: proveedor.nombre, servicio: proveedor.servicio } 
-        : { error: 'Proveedor no encontrado' },
-    };
-  });
-  
-  return presupuestoCompleto;
+  const totalIngresos = items
+    .filter(item => item.tipo === "ingreso")
+    .reduce((a, i) => a + (i.cantidad * i.precioUnitario), 0);
+
+  const saldo = totalIngresos - totalGastos;
+
+  return { totalGastos, totalIngresos, saldo };
 };
 
-// Traer todos los presupuestos
-async function traer(req, res) {
-  const presupuestos = await db.getCollection("presupuestos");
-  const proveedores = await db.getCollection("proveedores"); 
-  
-  const presupuestosCompletos = presupuestos.map(p => generarPresupuestoCompleto(p, proveedores));
-  
-  res.json(presupuestosCompletos);
-}
+// Listar todos los presupuestos
+export const listarPresupuestos = async (req, res) => {
+  try {
+    const presupuestos = await Presupuesto.find()
+      .populate("eventoId")
+      .populate("items.proveedorId")
+      .populate("items.clienteId");
 
-// Buscar presupuesto por ID
-async function obtenerPorId(req, res) {
-  const id = parseInt(req.params.id); 
-  
-  const presupuestos = await db.getCollection("presupuestos");
-  const proveedores = await db.getCollection("proveedores"); 
-  
-  const presupuesto = presupuestos.find((p) => p.id === id);
+    res.status(200).json(presupuestos);
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al listar presupuestos", error });
+  }
+};
 
-  if (presupuesto) {
-    const presupuestoCompleto = generarPresupuestoCompleto(presupuesto, proveedores);
-    res.json(presupuestoCompleto);
-  } else {
-    res.status(404).json({ error: "Presupuesto no encontrado" });
-  }
-}
+// Obtener un presupuesto por ID
+export const obtenerPresupuesto = async (req, res) => {
+  try {
+    const presupuesto = await Presupuesto.findById(req.params.id)
+      .populate("eventoId")
+      .populate("items.proveedorId")
+      .populate("items.clienteId");
 
-// Crear nuevo presupuesto
-async function crear(req, res) {
-  let presupuestos = await db.getCollection("presupuestos");
+    if (!presupuesto)
+      return res.status(404).json({ mensaje: "Presupuesto no encontrado" });
 
-  // El ID capaz en mongo se genera solo
-  const nuevoId = Math.max(0, ...presupuestos.map(p => p.id)) + 1;
-  
-  const nuevoPresupuesto = {
-    id: nuevoId,
-    eventoId: parseInt(req.body.eventoId),
-    nombre: req.body.nombre,
-    fechaEmision: new Date().toISOString(),
-    estado: req.body.estado || 'En elaboración',
-    items: req.body.items || [], 
-  };
-  
-  // Calcular el total
-  nuevoPresupuesto.totalGeneral = calcularTotal(nuevoPresupuesto.items);
+    res.status(200).json(presupuesto);
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al obtener presupuesto", error });
+  }
+};
 
-  // Agregar y guardar
-  presupuestos.push(nuevoPresupuesto);
-  await db.setCollection("presupuestos", presupuestos); // Usamos db.setCollection
+// Crear un nuevo presupuesto con fecha y resumen financiero
+export const crearPresupuesto = async (req, res) => {
+  try {
+    const nuevo = new Presupuesto(req.body);
 
-  // Devolvemos presupuesto
-  const proveedores = await db.getCollection("proveedores");
-  const presupuestoCompleto = generarPresupuestoCompleto(nuevoPresupuesto, proveedores);
+    // Asigna fecha automática
+    nuevo.fechaEmision = new Date();
 
-  res.status(201).json(presupuestoCompleto);
-}
+    // Calcula totales
+    nuevo.totalGeneral = calcularTotal(req.body.items);
+    const { totalGastos, totalIngresos, saldo } = calcularDetallesFinancieros(req.body.items);
 
-// Actualizar presupuesto
-async function actualizar(req, res) {
-  const id = parseInt(req.params.id);
-  let presupuestos = await db.getCollection("presupuestos");
-  const index = presupuestos.findIndex((p) => p.id === id);
+    await nuevo.save();
 
-  if (index !== -1) {
-    let presupuestoActualizado = { ...presupuestos[index], ...req.body };
-    
-    // Recalcular el total
-    if (req.body.items) {
-      presupuestoActualizado.totalGeneral = calcularTotal(presupuestoActualizado.items);
-    }
+    res.status(201).json({
+      mensaje: "Presupuesto creado correctamente",
+      fechaEmision: nuevo.fechaEmision,
+      totalGeneral: nuevo.totalGeneral,
+      totalGastos,
+      totalIngresos,
+      saldo,
+      presupuesto: nuevo
+    });
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error al crear presupuesto", error });
+  }
+};
 
-    presupuestos[index] = presupuestoActualizado;
-    
-    await db.setCollection("presupuestos", presupuestos);
-    
-    // Devolver el presupuesto
-    const proveedores = await db.getCollection("proveedores");
-    const presupuestoCompleto = generarPresupuestoCompleto(presupuestoActualizado, proveedores);
-    res.json(presupuestoCompleto);
-  } else {
-    res.status(404).json({ error: "Presupuesto no encontrado" });
-  }
-}
+// Actualizar presupuesto existente (recalcula totales si cambian los ítems)
+export const actualizarPresupuesto = async (req, res) => {
+  try {
+    const actualizado = await Presupuesto.findById(req.params.id);
 
-// Eliminar presupuesto
-async function eliminar(req, res) {
-  const id = parseInt(req.params.id);
-  let presupuestos = await db.getCollection("presupuestos");
-  
-  const filtrados = presupuestos.filter((p) => p.id !== id);
+    if (!actualizado)
+      return res.status(404).json({ mensaje: "Presupuesto no encontrado" });
 
-  if (presupuestos.length === filtrados.length) { 
-    return res.status(404).json({ error: "Presupuesto no encontrado" });
-  }
+    // Actualiza totales
+    Object.assign(actualizado, req.body);
+    if (req.body.items) {
+      actualizado.totalGeneral = calcularTotal(req.body.items);
+      const { totalGastos, totalIngresos, saldo } = calcularDetallesFinancieros(req.body.items);
+      actualizado.totalGastos = totalGastos;
+      actualizado.totalIngresos = totalIngresos;
+      actualizado.saldo = saldo;
+    }
 
-  await db.setCollection("presupuestos", filtrados);
-  res.status(204).end();
-}
+    await actualizado.save();
 
-const presupuestosController = { traer, obtenerPorId, crear, actualizar, eliminar };
-export default presupuestosController;
+    res.status(200).json({
+      mensaje: "Presupuesto actualizado correctamente",
+      fechaEmision: actualizado.fechaEmision,
+      totalGeneral: actualizado.totalGeneral,
+      totalGastos: actualizado.totalGastos,
+      totalIngresos: actualizado.totalIngresos,
+      saldo: actualizado.saldo,
+      presupuesto: actualizado
+    });
+  } catch (error) {
+    res.status(400).json({ mensaje: "Error al actualizar presupuesto", error });
+  }
+};
+
+// Eliminar un presupuesto
+export const eliminarPresupuesto = async (req, res) => {
+  try {
+    const eliminado = await Presupuesto.findByIdAndDelete(req.params.id);
+    if (!eliminado)
+      return res.status(404).json({ mensaje: "Presupuesto no encontrado" });
+    res.status(204).send();
+  } catch (error) {
+    res.status(500).json({ mensaje: "Error al eliminar presupuesto", error });
+  }
+};

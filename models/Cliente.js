@@ -1,19 +1,14 @@
-import db from '../config/db.js';
+// models/Cliente.js
+import mongoose from "mongoose";
 
-function generarIdCliente(){
-    const clientes = db.getCollection('clientes');
-    const idClientes = clientes.map(c => c.id);
-    return idClientes.length > 0 ? Math.max(...idClientes) + 1 : 1;
-}
+// Definimos cómo será cada cliente en la base de datos
+const clienteSchema = new mongoose.Schema({
+  nombre: { type: String, required: true },     // Nombre completo de persona o empresa
+  email: { type: String, required: true },      // Correo electrónico
+  telefono: { type: String, default: "" },      // Teléfono (opcional)
+  direccion: { type: String, default: "" },     // Dirección (opcional)
+  observaciones: { type: String, default: "" }  // Notas adicionales
+}, { timestamps: true });
 
-class Cliente {
-    constructor( {nombre, telefono, email, eventos = []} ){
-        this.id = generarIdCliente();
-        this.nombre = nombre;
-        this.telefono = telefono;
-        this.email = email;
-        this.eventos = eventos; 
-    }
-}
-
-export default Cliente;
+// Exportamos el modelo
+export default mongoose.model("Cliente", clienteSchema);

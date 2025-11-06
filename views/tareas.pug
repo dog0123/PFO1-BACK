@@ -1,0 +1,14 @@
+//- views/tareas.pug
+//-lista de tareas
+extends layout
+
+block content
+  h1 Tareas
+  a(href="/tareas/nueva") Nueva tarea
+  ul
+    each tarea in tareas
+      li
+        h3 #{tarea.titulo} - #{tarea.estado}
+        p Responsable: #{tarea.responsable || 'sin asignar'}
+        a(href=`/tareas/${tarea._id}`) Ver
+        a(href=`/tareas/editar/${tarea._id}`) Editar

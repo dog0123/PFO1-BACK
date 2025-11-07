@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-block contenido
-  h2 Eventify
-  form(action='/eventos' method="POST")    
-    button(type='submit') Eventos
-  
-  form(action='/proveedores', method="post") 
-    button(type='submit') Proveedores
-
-  form(action='/clientes', methof="post")
-    button(type='submit') Clientes
-=======
 extends layout
 
 block content
@@ -19,7 +7,7 @@ block content
 
     //- Botones principales 
     .d-grid.gap-3.col-6.mx-auto.mt-5
-      a.btn.btn-outline-primary.btn-lg(href="/eventos") Eventos
+      a.btn.btn-outline-primary.btn-lg(href="/eventos/vista") Eventos
       a.btn.btn-outline-success.btn-lg(href="/clientes") Clientes
       a.btn.btn-outline-warning.btn-lg(href="/proveedores") Proveedores
       a.btn.btn-outline-info.btn-lg(href="/tareas/vista") Tareas
@@ -28,4 +16,3 @@ block content
 
     hr.mt-5
     p.text-muted.mt-3 Creado por el equipo PF01 - Grupo 19
->>>>>>> alci

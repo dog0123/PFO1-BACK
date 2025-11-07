@@ -1,4 +1,4 @@
-html
+//-html
     head
     title Eventos
     body
@@ -9,3 +9,23 @@ html
                 p= evento.nombre
                 p= evento.fecha
                 p= evento.lugar
+
+//- views/eventos.pug
+extends layout
+
+block content
+  h1.mb-4 Lista de Eventos
+  table.table.table-striped
+    thead
+      tr
+        th Nombre
+        th Fecha
+        th Lugar
+        th Estado
+    tbody
+      each evento in eventos
+        tr
+          td #{evento.nombre}
+          td #{new Date(evento.fecha).toLocaleDateString()}
+          td #{evento.lugar}
+          td #{evento.estado}

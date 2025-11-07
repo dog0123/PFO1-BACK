@@ -1,15 +1,20 @@
-import express from 'express';
-import clienteController from '../controllers/clienteController.js';
+// routes/clientes.js
+import express from "express";
+import {
+  listarClientes,
+  obtenerCliente,
+  crearCliente,
+  actualizarCliente,
+  eliminarCliente
+} from "../controllers/clientesController.js";
 
 const router = express.Router();
 
-router.get("/", clienteController.traer);
-router.get("/completos", clienteController.traerConEventos);
-router.get("/:id/completo", clienteController.obtenerClienteCompleto);
-router.get("/:id", clienteController.obtenerPorId);
-router.post("/", clienteController.crear);
-router.put("/:id", clienteController.actualizar);
-router.delete("/:id", clienteController.eliminar);
+// Endpoints CRUD
+router.get("/", listarClientes);         // Listado de todos los clientes
+router.get("/:id", obtenerCliente);      // Ver un solo cliente por id
+router.post("/", crearCliente);          // Crear nuevo
+router.put("/:id", actualizarCliente);   // Actualizar
+router.delete("/:id", eliminarCliente);  // Eliminar
 
 export default router;
-

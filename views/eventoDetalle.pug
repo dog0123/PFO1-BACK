@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  // 🔹 Formulario de edición del evento
+  form(action=`/eventos/${evento._id}?_method=PUT`, method='POST')
+    div.mb-3
+      label.form-label(for='nombre') Nombre
+      input.form-control(
+        type='text',
+        id='nombre',
+        name='nombre',
+        value=evento.nombre || '',
+        required
+      )
+
+    div.mb-3
+      label.form-label(for='fecha') Fecha
+      // si no hay fechaFormateada, deja vacío
+      input.form-control(
+        type='date',
+        id='fecha',
+        name='fecha',
+        value=fechaFormateada || ''
+      )
+
+    div.mb-3
+      label.form-label(for='lugar') Lugar
+      input.form-control(
+        type='text',
+        id='lugar',
+        name='lugar',
+        value=evento.lugar || ''
+      )
+
+    if evento.estadoId
+      div.mb-3
+        label.form-label Estado
+        p.form-control-plaintext= evento.estadoId.nombre || 'Sin estado'
+
+    if evento.clienteId
+      div.mb-3
+        label.form-label Cliente
+        p.form-control-plaintext= evento.clienteId.nombre || 'Sin cliente'
+
+    if evento.proveedores && evento.proveedores.length
+      div.mb-3
+        label.form-label Proveedores
+        ul
+          each proveedor in evento.proveedores
+            li= proveedor.nombre || proveedor.toString()
+
+    if evento.tareas && evento.tareas.length
+      div.mb-3
+        label.form-label Tareas
+        ul
+          each tarea in evento.tareas
+            li= tarea.nombre || tarea.toString()
+
+    if evento.invitados && evento.invitados.length
+      div.mb-3
+        label.form-label Invitados
+        ul
+          each invitado in evento.invitados
+            li= invitado.nombre || invitado.toString()
+
+    button.btn.btn-success(type='submit') Guardar Cambios
+
+  // 🔹 Formulario de eliminación del evento
+  form(action=`/eventos/${evento._id}?_method=DELETE`, method='POST', style='margin-top: 20px;')
+    button.btn.btn-danger(type='submit') Eliminar Evento
+
+  a.btn.btn-secondary.mt-3(href='/eventos/vista') Volver a la lista

@@ -22,6 +22,7 @@ block content
         th Fecha
         th Lugar
         th Estado
+        th Acciones
     tbody
       each evento in eventos
         tr
@@ -29,3 +30,6 @@ block content
           td #{new Date(evento.fecha).toLocaleDateString()}
           td #{evento.lugar}
           td #{evento.estado}
+          td
+            a.btn.btn-primary(href=`/eventos/vista/${evento._id}`) Seleccionar
+

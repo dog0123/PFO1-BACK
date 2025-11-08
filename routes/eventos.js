@@ -23,6 +23,39 @@ router.get("/vista", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
   });
+// 🔹 VISTA DETALLE (Pug)
+router.get("/vista/:id", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    
+    const evento = await Evento.findById(req.params.id)
+      .populate("clienteId")
+      .populate("proveedores")
+      .populate("tareas")
+      .populate("invitados")
+      .populate("estadoId")
+      .lean();
+
+    if (!evento) {
+      return res.status(404).send("Evento no encontrado");
+    }
+
+    // 👇 Convertimos la fecha para el input type="date"
+    const fechaFormateada = evento.fecha
+      ? new Date(evento.fecha).toISOString().substring(0, 10)
+      : "";
+
+    // Renderizamos pasando la fecha ya lista
+    res.render("eventoDetalle", {
+      titulo: "Detalle del Evento",
+      evento,
+      fechaFormateada
+    });
+  } catch (error) {
+    console.error("Error al cargar /eventos/vista/:id:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 
 // CRUD principal

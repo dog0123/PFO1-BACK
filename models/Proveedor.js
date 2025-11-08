@@ -11,4 +11,4 @@ const proveedorSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 // Exportamos el modelo "Proveedor" para poder usarlo en los controladores
-export default mongoose.model("Proveedor", proveedorSchema);
+export default mongoose.model("Proveedor", proveedorSchema, "proveedores");

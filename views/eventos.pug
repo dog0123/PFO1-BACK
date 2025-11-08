@@ -29,7 +29,9 @@ block content
           td #{evento.nombre}
           td #{new Date(evento.fecha).toLocaleDateString()}
           td #{evento.lugar}
-          td #{evento.estado}
+          td #{evento.estadoId ? evento.estadoId.estadoActual : 'Sin estado'}
           td
             a.btn.btn-primary(href=`/eventos/vista/${evento._id}`) Seleccionar
 
+
+  a.btn.btn-secondary.mt-3(href='/') Volver

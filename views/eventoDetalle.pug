@@ -3,7 +3,7 @@ extends layout
 block content
   h1.mb-4= titulo
 
-  // 🔹 Formulario de edición del evento
+  // Formulario de edición del evento
   form(action=`/eventos/${evento._id}?_method=PUT`, method='POST')
     div.mb-3
       label.form-label(for='nombre') Nombre
@@ -12,7 +12,7 @@ block content
         id='nombre',
         name='nombre',
         value=evento.nombre || '',
-        required
+        
       )
 
     div.mb-3
@@ -23,6 +23,7 @@ block content
         id='fecha',
         name='fecha',
         value=fechaFormateada || ''
+        
       )
 
     div.mb-3
@@ -32,25 +33,32 @@ block content
         id='lugar',
         name='lugar',
         value=evento.lugar || ''
+        
       )
 
     if evento.estadoId
       div.mb-3
-        label.form-label Estado
-        p.form-control-plaintext= evento.estadoId.nombre || 'Sin estado'
+        a.form-label(href=`/eventos/${evento._id}/estado`) Estado
+        p.form-control-plaintext= evento.estadoId.estadoActual || 'Sin estado'
 
     if evento.clienteId
       div.mb-3
         label.form-label Cliente
-        p.form-control-plaintext= evento.clienteId.nombre || 'Sin cliente'
+        select.form-select(name='clienteId' id='clienteId' required)
+          option(value='') Seleccionar cliente...
+          each cliente in clientes
+            option(
+              value=cliente._id,
+              selected=evento.clienteId && cliente._id.toString() === evento.clienteId._id.toString()
+            )= cliente.nombre
 
     if evento.proveedores && evento.proveedores.length
       div.mb-3
-        label.form-label Proveedores
+        a.form-label(href=`/eventos/${evento._id}/proveedores`) Proveedores
         ul
           each proveedor in evento.proveedores
             li= proveedor.nombre || proveedor.toString()
-
+    
     if evento.tareas && evento.tareas.length
       div.mb-3
         label.form-label Tareas
@@ -67,7 +75,7 @@ block content
 
     button.btn.btn-success(type='submit') Guardar Cambios
 
-  // 🔹 Formulario de eliminación del evento
+  // Formulario de eliminación del evento
   form(action=`/eventos/${evento._id}?_method=DELETE`, method='POST', style='margin-top: 20px;')
     button.btn.btn-danger(type='submit') Eliminar Evento
 

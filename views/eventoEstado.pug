@@ -1,0 +1,63 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  form(action=`/eventos/${evento._id}/estado`, method='POST')
+    div.mb-3
+      label.form-label(for='estadoActual') Estado actual
+      input.form-control(
+        type='text',
+        name='estadoActual',
+        id='estadoActual',
+        required,
+        value=estado ? estado.estadoActual : ''
+      )
+
+    div.mb-3
+      label.form-label(for='descripcion') Descripción
+      textarea.form-control(
+        name='descripcion',
+        id='descripcion',
+        rows='3'
+      )= estado ? estado.descripcion : ''
+
+    div.mb-3
+      label.form-label(for='usuario') Usuario que determina el estado
+      input.form-control(
+        type='text',
+        name='usuario',
+        id='usuario',
+        value=estado ? estado.usuario : ''
+      )
+
+    div.mb-3
+      label.form-label(for='fechaDeterminacion') Fecha de determinación
+      input.form-control(
+        type='date',
+        name='fechaDeterminacion',
+        id='fechaDeterminacion',
+        value=estado && estado.fechaDeterminacion
+          ? new Date(estado.fechaDeterminacion).toISOString().split('T')[0]
+          : new Date().toISOString().split('T')[0]
+      )
+
+    button.btn.btn-success(type='submit') Guardar cambios
+
+  if estado && estado.historial && estado.historial.length
+    hr
+    h4.mt-4 Historial de cambios
+    ul.list-group
+      each h in estado.historial
+        li.list-group-item
+          p.mb-1
+            b Estado anterior:
+            |  #{h.estadoAnterior || 'Desconocido'}
+          if h.descripcionAnterior
+            p.mb-1
+              b Descripción anterior:
+              |  #{h.descripcionAnterior}
+          if h.fechaCambio
+            p.text-muted Fecha del cambio: #{new Date(h.fechaCambio).toLocaleDateString()}
+
+  a.btn.btn-secondary.mt-4(href=`/eventos/vista/${evento._id}`) Volver al evento

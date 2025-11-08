@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  p
+    b Nombre:
+    |  #{proveedor.nombre || '—'}
+
+  p
+    b Servicio:
+    |  #{proveedor.servicio || '—'}
+
+  p
+    b Teléfono:
+    |  #{proveedor.telefono || '—'}
+  p
+    b Email:
+    |  #{proveedor.email || '—'}
+  p
+    b Dirección:
+    |  #{proveedor.direccion || '—'}
+
+  a.btn.btn-warning(href=`/proveedores/${proveedor._id}/editar`) Editar
+  form(action=`/proveedores/${proveedor._id}?_method=DELETE`, method='POST', style='display:inline')
+    button.btn.btn-danger.ms-2(type='submit') Eliminar
+  a.btn.btn-secondary.ms-2(href='/proveedores/vista') Volver a la lista

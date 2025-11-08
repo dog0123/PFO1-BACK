@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  form(action= cliente._id ? `/clientes/${cliente._id}?_method=PUT` : '/clientes/vista', method='POST')
+    div.mb-3
+      label.form-label(for='nombre') Nombre
+      input.form-control(type='text', name='nombre', id='nombre', required, value=cliente.nombre || '')
+
+    div.mb-3
+      label.form-label(for='email') Email
+      input.form-control(type='email', name='email', id='email', value=cliente.email || '')
+
+    div.mb-3
+      label.form-label(for='telefono') Teléfono
+      input.form-control(type='text', name='telefono', id='telefono', value=cliente.telefono || '')
+
+    div.mb-3
+      label.form-label(for='direccion') Dirección
+      input.form-control(type='text', name='direccion', id='direccion', value=cliente.direccion || '')
+
+    div.mb-3
+      label.form-label(for='direccion') Obvservaciones
+      input.form-control(type='text', name='observaciones', id='observaciones', value=cliente.observaciones || '')
+
+    button.btn.btn-success(type='submit') Guardar
+
+  a.btn.btn-secondary.mt-3(href='/clientes/vista') Volver a la lista

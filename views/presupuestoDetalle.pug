@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  h1.mb-4 Detalle del Presupuesto
+
+  if presupuesto
+    p
+      b Nombre:
+      |  #{presupuesto.nombre || '—'}
+    p
+      b Evento:
+      |  #{(presupuesto.eventoId && presupuesto.eventoId.nombre) ? presupuesto.eventoId.nombre : '—'}
+    p
+      b Fecha de Emisión:
+      |  #{presupuesto.fechaEmision ? new Date(presupuesto.fechaEmision).toLocaleDateString() : '—'}
+    p
+      b Estado:
+      |  #{presupuesto.estado || '—'}
+    p
+      b Total General:
+      |  $#{(presupuesto.totalGeneral && presupuesto.totalGeneral.toFixed(2)) || '0.00'}
+
+    hr
+    h3.mt-4 Ítems del Presupuesto
+
+    if presupuesto.items && presupuesto.items.length
+      table.table.table-striped.mt-3
+        thead
+          tr
+            th Descripción
+            th Tipo
+            th Cantidad
+            th Precio Unitario
+            th Subtotal
+        tbody
+          each item in presupuesto.items
+            tr
+              td= item.descripcion
+              td= item.tipo
+              td= item.cantidad
+              td $#{item.precioUnitario.toFixed(2)}
+              td $#{(item.cantidad * item.precioUnitario).toFixed(2)}
+             
+    else
+      p.mt-3 No hay ítems cargados.
+
+    a.btn.btn-warning.mt-3(href=`/presupuestos/${presupuesto._id}/editar`) Editar
+    a.btn.btn-secondary.mt-3.ms-2(href='/presupuestos/vista') Volver
+  else
+    p.text-danger Presupuesto no encontrado.

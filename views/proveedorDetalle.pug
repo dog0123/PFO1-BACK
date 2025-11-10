@@ -21,7 +21,7 @@ block content
     b Dirección:
     |  #{proveedor.direccion || '—'}
 
-  a.btn.btn-warning(href=`/proveedores/${proveedor._id}/editar`) Editar
-  form(action=`/proveedores/${proveedor._id}?_method=DELETE`, method='POST', style='display:inline')
+  a.btn.btn-warning(href=`/proveedores/vista/${proveedor._id}/editar`) Editar
+  form(action=`/proveedores/vista/${proveedor._id}?_method=DELETE`, method='POST', style='display:inline')
     button.btn.btn-danger.ms-2(type='submit') Eliminar
   a.btn.btn-secondary.ms-2(href='/proveedores/vista') Volver a la lista

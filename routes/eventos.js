@@ -27,16 +27,45 @@ router.get("/vista", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
   });
-// 🔹 VISTA DETALLE (Pug)
+
+
+
+// Guardar nuevo evento
+router.post("/vista", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    await Evento.create(req.body);
+    res.redirect("/eventos/vista");
+  } catch (error) {
+    console.error("Error al crear evento:", error);
+    res.status(500).send("Error al crear evento");
+  }
+});
+
+// Actualizar evento existente
+router.put("/:id", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    await Evento.findByIdAndUpdate(req.params.id, req.body);
+    res.redirect("/eventos/vista");
+  } catch (error) {
+    console.error("Error al actualizar evento:", error);
+    res.status(500).send("Error al actualizar evento");
+  }
+});
+
+// VISTA DETALLE (Pug)
 router.get("/vista/:id", async (req, res) => {
   try {
     const Evento = (await import("../models/Evento.js")).default;
     
     const evento = await Evento.findById(req.params.id)
       .populate("clienteId")
-      .populate("proveedores")
+      .populate({
+    path: "proveedores",
+    select: "nombre" // Trae solo el nombre
+  })
       .populate("tareas")
-      .populate("invitados")
       .populate({
           path: "reporteId",
           select: "encabezado reporte encuestasDeSatisfaccion feedbackSupervisorDe feedbackParticipantes",
@@ -51,15 +80,13 @@ router.get("/vista/:id", async (req, res) => {
       return res.status(404).send("Evento no encontrado");
     }
 
-    // 👇 Convertimos la fecha para el input type="date"
+    //Convertimos la fecha
     const fechaFormateada = evento.fecha
       ? new Date(evento.fecha).toISOString().substring(0, 10)
       : "";
     const Cliente = (await import("../models/Cliente.js")).default;
     const clientes = await Cliente.find().lean();
 
-
-    // Renderizamos pasando la fecha ya lista
     res.render("eventoDetalle", {
       titulo: "Detalle del Evento",
       evento,
@@ -72,7 +99,7 @@ router.get("/vista/:id", async (req, res) => {
   }
 });
 
-// 📄 Mostrar estado del evento
+// Mostrar estado del evento
 router.get("/:id/estado", async (req, res) => {
   const Estado = (await import("../models/Estado.js")).default;
   const Evento = (await import("../models/Evento.js")).default;
@@ -90,7 +117,6 @@ router.get("/:id/estado", async (req, res) => {
 });
 
 
-// 📍 POST /eventos/:id/estado
 router.post("/:id/estado", async (req, res) => {
   try {
     const Estado = (await import("../models/Estado.js")).default;
@@ -134,8 +160,6 @@ router.post("/:id/estado", async (req, res) => {
     res.status(500).send("Error al actualizar estado");
   }
 });
-
-
 
 // Mostrar proveedores del evento
 router.get("/:id/proveedores", async (req, res) => {
@@ -182,6 +206,63 @@ router.delete("/:id/proveedores/:proveedorId", async (req, res) => {
   res.redirect(`/eventos/${req.params.id}/proveedores`);
 });
 
+// Mostrar los invitados de un evento
+router.get("/:id/invitados", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    const evento = await Evento.findById(req.params.id).lean();
+
+    if (!evento) return res.status(404).send("Evento no encontrado");
+
+    res.render("eventoInvitados", {
+      titulo: `Invitados de ${evento.nombre}`,
+      evento
+    });
+  } catch (error) {
+    console.error("Error al cargar invitados del evento:", error);
+    res.status(500).send("Error al cargar los invitados del evento");
+  }
+});
+
+// Agregar un invitado al evento
+router.post("/:id/invitados", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    const { nombre, contacto } = req.body;
+
+    // Agregamos el nuevo invitado al array
+    await Evento.findByIdAndUpdate(req.params.id, {
+      $push: { invitados: { nombre, contacto } }
+    });
+
+    res.redirect(`/eventos/${req.params.id}/invitados`);
+  } catch (error) {
+    console.error("Error al agregar invitado:", error);
+    res.status(500).send("Error al agregar invitado");
+  }
+});
+
+// Eliminar un invitado del evento
+router.delete("/:eventoId/invitados/:index", async (req, res) => {
+  try {
+    const Evento = (await import("../models/Evento.js")).default;
+    const { eventoId, index } = req.params;
+
+    // Obtenemos el evento
+    const evento = await Evento.findById(eventoId);
+    if (!evento) return res.status(404).send("Evento no encontrado");
+
+    // Eliminamos el invitado según el índice
+    evento.invitados.splice(index, 1);
+
+    await evento.save();
+
+    res.redirect(`/eventos/${eventoId}/invitados`);
+  } catch (error) {
+    console.error("Error al eliminar invitado:", error);
+    res.status(500).send("Error al eliminar invitado");
+  }
+});
 
 // CRUD principal
 router.get("/", listarEventos);

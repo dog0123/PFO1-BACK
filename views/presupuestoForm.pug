@@ -1,0 +1,84 @@
+extends layout
+
+block content
+  h1.mb-4= presupuesto._id ? `Editar Presupuesto` : `Nuevo Presupuesto`
+
+  form(method="POST", action=action)
+    div.mb-3
+      label.form-label(for="nombre") Nombre del Presupuesto
+      input.form-control(type="text", name="nombre", required, value=presupuesto.nombre || "")
+
+    div.mb-3
+      label.form-label(for='eventoId') Evento asociado
+      select.form-select(name='eventoId', id='eventoId', required, disabled=presupuesto._id)
+        option(value='') Seleccionar evento...
+          each evento in eventos
+            option(
+              value=evento._id,
+              selected=presupuesto.eventoId && evento._id.toString() === presupuesto.eventoId.toString()
+            )= evento.nombre
+
+
+    div.mb-3
+      label.form-label(for="estado") Estado
+      select.form-select(name="estado", id="estado")
+        option(value="En elaboración", selected=presupuesto.estado==='En elaboración') En elaboración
+        option(value="Aprobado", selected=presupuesto.estado==='Aprobado') Aprobado
+        option(value="Rechazado", selected=presupuesto.estado==='Rechazado') Rechazado
+
+    // Fecha de emisión (solo visible si ya existe el presupuesto)
+    if presupuesto.fechaEmision
+      div.mb-3
+        label.form-label Fecha de emisión:
+        p.form-control-plaintext #{new Date(presupuesto.fechaEmision).toLocaleDateString()}
+
+    hr
+
+    h3.mt-4 Ítems del Presupuesto
+    if presupuesto.items && presupuesto.items.length
+      table.table.table-striped.mt-3
+        thead
+          tr
+            th Descripción
+            th Tipo
+            th Cantidad
+            th Precio Unitario
+            th Acciones
+        tbody
+          each item, i in presupuesto.items
+            tr
+              td= item.descripcion
+              td= item.tipo
+              td= item.cantidad
+              td $#{item.precioUnitario.toFixed(2)}
+              td
+                form(action=`/presupuestos/${presupuesto._id}/items/${i}?_method=DELETE`, method='POST', style='display:inline;')
+                  button.btn.btn-danger.btn-sm(type='submit') Quitar
+    else
+      p.text-muted No hay ítems agregados todavía.
+
+  h3.mt-4 Agregar nuevo ítem
+  form(method="POST" action=`/presupuestos/${presupuesto._id}/items`)
+    .mb-3
+      label.form-label(for="descripcion") Descripción:
+      input.form-control(type="text" name="descripcion" id="descripcion" required)
+
+    .mb-3
+      label.form-label(for="tipo") Tipo:
+      select.form-select(name="tipo" id="tipo" required)
+        option(value="ingreso") Ingreso
+        option(value="gasto") Gasto
+
+    .mb-3
+      label.form-label(for="cantidad") Cantidad:
+      input.form-control(type="number" name="cantidad" id="cantidad" min="1" value="1" required)
+
+    .mb-3
+      label.form-label(for="precioUnitario") Precio Unitario:
+      input.form-control(type="number" step="0.01" name="precioUnitario" id="precioUnitario" required)
+
+    button.btn.btn-success.mt-2(type="submit") Agregar ítem
+
+  div.mt-4
+    button.btn.btn-primary(type="submit") Guardar
+    a.btn.btn-secondary.ms-2(href="/presupuestos/vista") Cancelar

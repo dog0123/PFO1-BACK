@@ -4,7 +4,10 @@ block content
   h1.mb-4= titulo
 
   // Formulario de edición del evento
-  form(action=`/eventos/${evento._id}?_method=PUT`, method='POST')
+  form(
+    action= evento._id ? `/eventos/${evento._id}?_method=PUT` : '/eventos',
+    method='POST'
+  )
     div.mb-3
       label.form-label(for='nombre') Nombre
       input.form-control(
@@ -36,28 +39,29 @@ block content
         
       )
 
-    if evento.estadoId
-      div.mb-3
-        a.form-label(href=`/eventos/${evento._id}/estado`) Estado
-        p.form-control-plaintext= evento.estadoId.estadoActual || 'Sin estado'
+    div.mb-3
+      a.form-label(href=`/eventos/${evento._id}/estado`) Estado
+      if evento.estadoId
+        p.form-control-plaintext= evento.estadoId.estadoActual
+      else
+        p.form-control-plaintext Sin estado
 
-    if evento.clienteId
-      div.mb-3
-        label.form-label Cliente
-        select.form-select(name='clienteId' id='clienteId' required)
-          option(value='') Seleccionar cliente...
-          each cliente in clientes
-            option(
-              value=cliente._id,
-              selected=evento.clienteId && cliente._id.toString() === evento.clienteId._id.toString()
-            )= cliente.nombre
 
-    if evento.proveedores && evento.proveedores.length
-      div.mb-3
-        a.form-label(href=`/eventos/${evento._id}/proveedores`) Proveedores
-        ul
-          each proveedor in evento.proveedores
-            li= proveedor.nombre || proveedor.toString()
+    div.mb-3
+      label.form-label Cliente
+      select.form-select(name='clienteId' id='clienteId' required)
+        option(value='') Seleccionar cliente...
+        each cliente in clientes
+          option(
+            value=cliente._id,
+            selected=evento.clienteId && cliente._id.toString() === evento.clienteId._id.toString()
+          )= cliente.nombre
+
+    div.mb-3
+      a.form-label(href=`/eventos/${evento._id}/proveedores`) Proveedores
+      ul
+        each proveedor in evento.proveedores
+          li= proveedor.nombre || proveedor.toString()
     
     if evento.tareas && evento.tareas.length
       div.mb-3
@@ -68,7 +72,7 @@ block content
 
     if evento.invitados && evento.invitados.length
       div.mb-3
-        label.form-label Invitados
+        a.form-label(href=`/eventos/${evento._id}/invitados`) Invitados
         ul
           each invitado in evento.invitados
             li= invitado.nombre || invitado.toString()

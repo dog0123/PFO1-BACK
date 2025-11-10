@@ -3,7 +3,7 @@ extends layout
 block content
   h1.mb-4= titulo
 
-  form(action= proveedor._id ? `/proveedores/${proveedor._id}?_method=PUT` : '/proveedores/vista', method='POST')
+  form(action= proveedor._id ? `/proveedores/vista/${proveedor._id}?_method=PUT` : '/proveedores/vista', method='POST')
     div.mb-3
       label.form-label(for='nombre') Nombre
       input.form-control(type='text', name='nombre', id='nombre', required, value=proveedor.nombre || '')

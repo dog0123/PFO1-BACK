@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1.mb-4 Lista de Presupuestos
+
+  a.btn.btn-primary.mb-3(href='/presupuestos/vista/nuevo') Nuevo Presupuesto
+
+  if presupuestos.length
+    table.table.table-striped
+      thead
+        tr
+          th Nombre
+          th Evento
+          th Fecha de Emisión
+          th Estado
+          th Total
+          th Acciones
+      tbody
+        each presupuesto in presupuestos
+          tr
+            td= presupuesto.nombre
+            td= presupuesto.eventoId ? presupuesto.eventoId.nombre : '—'
+            td= new Date(presupuesto.fechaEmision).toLocaleDateString('es-AR')
+            td= presupuesto.estado
+            td $#{presupuesto.totalGeneral.toFixed(2)}
+            td
+              a.btn.btn-sm.btn-info(href=`/presupuestos/vista/${presupuesto._id}`) Ver              
+  else
+    p.text-muted No hay presupuestos cargados aún.
+
+  a.btn.btn-secondary.mt-3(href='/') Volver

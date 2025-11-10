@@ -58,7 +58,7 @@ router.get("/vista/:id", async (req, res) => {
   }
 });
 
-router.get("/:id/editar", async (req, res) => {
+router.get("/vista/:id/editar", async (req, res) => {
   try {
     const Proveedor = (await import("../models/Proveedor.js")).default;
     const proveedor = await Proveedor.findById(req.params.id).lean();
@@ -75,7 +75,7 @@ router.get("/:id/editar", async (req, res) => {
 });
 
 // Actualizar proveedor
-router.put("/:id", async (req, res) => {
+router.put("/vista/:id", async (req, res) => {
   try {
     const Proveedor = (await import("../models/Proveedor.js")).default;
     await Proveedor.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -86,7 +86,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/vista/:id", async (req, res) => {
   try {
     const Proveedor = (await import("../models/Proveedor.js")).default;
     await Proveedor.findByIdAndDelete(req.params.id);

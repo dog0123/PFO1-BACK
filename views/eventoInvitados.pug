@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  h1.mb-4 Invitados del evento: #{evento.nombre}
+
+  if evento.invitados && evento.invitados.length
+    table.table.table-striped.mt-3
+      thead
+        tr
+          th Nombre
+          th Contacto
+          th Acciones
+      tbody
+        each invitado, i in evento.invitados
+          tr
+            td= invitado.nombre
+            td= invitado.contacto
+            td
+              form(method="POST", action=`/eventos/${evento._id}/invitados/${i}?_method=DELETE`, style="display:inline;")
+                button.btn.btn-sm.btn-danger(type="submit") Quitar
+  else
+    p.text-muted No hay invitados registrados para este evento.
+
+  hr
+
+  h3.mt-4 Agregar nuevo invitado
+  form(method="POST" action=`/eventos/${evento._id}/invitados`)
+    .mb-3
+      label.form-label(for="nombre") Nombre:
+      input.form-control(type="text" name="nombre" id="nombre" required)
+
+    .mb-3
+      label.form-label(for="contacto") Contacto:
+      input.form-control(type="text" name="contacto" id="contacto" placeholder="Email o teléfono")
+
+    button.btn.btn-success.mt-2(type="submit") Agregar invitado
+
+  a.btn.btn-secondary.mt-4(href=`/eventos/vista/${evento._id}`) Volver al evento

@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  // Proveedores asignados
+  h4.mb-3 Proveedores asignados
+  if proveedoresAsignados && proveedoresAsignados.length
+    ul.list-group.mb-4
+      each prov in proveedoresAsignados
+        li.list-group-item.d-flex.justify-content-between.align-items-center
+          span= prov.nombre
+          form(action=`/eventos/${evento._id}/proveedores/${prov._id}?_method=DELETE`, method='POST')
+            button.btn.btn-sm.btn-danger(type='submit') Quitar
+  else
+    p.text-muted No hay proveedores asignados aún.
+
+  // Agregar proveedor
+  h4.mb-3 Agregar proveedor
+  if proveedoresDisponibles && proveedoresDisponibles.length
+    form(action=`/eventos/${evento._id}/proveedores`, method='POST')
+      div.input-group
+        select.form-select(name='proveedorId', required)
+          option(value='') Seleccionar proveedor...
+          each prov in proveedoresDisponibles
+            option(value=prov._id)= prov.nombre
+        button.btn.btn-primary(type='submit') Agregar
+  else
+    p.text-muted No hay proveedores disponibles para agregar.
+
+  a.btn.btn-secondary.mt-4(href=`/eventos/vista/${evento._id}`) Volver al evento

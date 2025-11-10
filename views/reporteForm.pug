@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  form(action= reporte._id ? `/reportes/${reporte._id}?_method=PUT` : '/reportes/vista', method='POST')
+    div.mb-3
+      label.form-label(for='encabezado') Encabezado
+      input.form-control(type='text', name='encabezado', id='encabezado', required, value=reporte.encabezado || '')
+
+    div.mb-3
+      label.form-label(for='reporte') Contenido del reporte
+      textarea.form-control(name='reporte', id='reporte', rows='4')= reporte.reporte || ''
+
+    div.mb-3
+      label.form-label(for='feedbackSupervisorDeEvento') Feedback del supervisor
+      textarea.form-control(name='feedbackSupervisorDeEvento', id='feedbackSupervisorDeEvento', rows='3')= reporte.feedbackSupervisorDeEvento || ''
+
+    div.mb-3
+      label.form-label(for='eventoId') Evento asociado
+      select.form-select(name='eventoId', id='eventoId', required, disabled=reporte._id)
+        option(value='') Seleccionar evento...
+        each evento in eventos
+          option(
+            value=evento._id,
+            selected=reporte.eventoId && evento._id.toString() === reporte.eventoId.toString()
+          )= evento.nombre 
+
+
+    button.btn.btn-success(type='submit') Guardar
+
+  a.btn.btn-secondary.mt-3(href='/reportes/vista') Volver a la lista

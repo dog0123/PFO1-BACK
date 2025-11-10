@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  a.btn.btn-primary.mb-3(href='/reportes/vista/nuevo') Agregar nuevo Reporte
+
+  if reportes.length
+    table.table.table-striped
+      thead
+        tr
+          th Encabezado
+          th Evento
+          th Acciones
+      tbody
+        each reporte in reportes
+          tr
+            td= reporte.encabezado
+            td= reporte.eventoId ? reporte.eventoId.nombre : 'Sin evento asociado'
+            td
+              a.btn.btn-info.btn-sm(href=`/reportes/vista/${reporte._id}`) Ver
+  else
+    p No hay reportes cargados aún.
+
+  a.btn.btn-secondary.mt-3(href='/') Volver

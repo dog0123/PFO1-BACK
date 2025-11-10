@@ -4,6 +4,8 @@ import express from 'express';
 import 'dotenv/config'; // carga variables del archivo .env
 import connectDB from './config/mongo.js'; // conexión a Mongo
 import db from './config/db.js'; // conexión antigua JSON (para compatibilidad)
+import methodOverride from "method-override";
+
 
 // Importa las rutas de TODOS los módulos hechos
 import proveedorRoutes from './routes/proveedores.js';
@@ -12,6 +14,8 @@ import presupuestoRoutes from './routes/presupuestos.js';
 import tareasRoutes from './routes/tareas.js';
 import clienteRoutes from './routes/clientes.js'; 
 import invitadoRoutes from './routes/invitados.js';
+import estadoRoutes from "./routes/estados.js";
+import reporteRoutes from "./routes/reportes.js";
 
 
 const app = express();
@@ -19,6 +23,7 @@ const app = express();
 // Middlewares básicos
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
 
 // Motor de plantillas PUG
 app.set('view engine', 'pug');
@@ -39,6 +44,9 @@ app.use('/presupuestos', presupuestoRoutes);
 app.use('/tareas', tareasRoutes);
 app.use('/clientes', clienteRoutes);
 app.use('/invitados', invitadoRoutes);
+app.use("/estados", estadoRoutes);
+app.use("/reportes", reporteRoutes);
+
 
 // Ruta raíz
 app.get('/', (req, res) => {

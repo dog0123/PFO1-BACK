@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  form(action= proveedor._id ? `/proveedores/vista/${proveedor._id}?_method=PUT` : '/proveedores/vista', method='POST')
+    div.mb-3
+      label.form-label(for='nombre') Nombre
+      input.form-control(type='text', name='nombre', id='nombre', required, value=proveedor.nombre || '')
+
+    div.mb-3
+      label.form-label(for='servicio') Servicio
+      input.form-control(type='text', name='servicio', id='servicio', value=proveedor.servicio || '')
+
+    div.mb-3
+      label.form-label(for='telefono') Teléfono
+      input.form-control(type='text', name='telefono', id='telefono', value=proveedor.telefono || '')
+
+    div.mb-3
+      label.form-label(for='email') Email
+      input.form-control(type='email', name='email', id='email', value=proveedor.email || '')
+    
+    div.mb-3
+      label.form-label(for='direccion') Dirección
+      input.form-control(type='text', name='direccion', id='direccion', value=proveedor.direccion || '')
+
+    button.btn.btn-success(type='submit') Guardar
+  a.btn.btn-secondary.mt-3(href='/proveedores/vista') Volver a la lista

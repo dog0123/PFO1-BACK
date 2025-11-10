@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  h1.mb-4= invitado._id ? `Editar invitado` : `Nuevo invitado`
+
+
+
+  form(method="POST" action=action)    
+    div.mb-3
+      label.form-label(for='eventoId') Evento asociado
+      select.form-select(name='eventoId', id='eventoId', required)
+        option(value='') Seleccionar evento...
+        each evento in eventos
+          option(
+            value=evento._id
+          )= evento.nombre 
+    
+    div.mb-3
+      label.form-label(for="nombre") Nombre:
+      input.form-control(type="text" name="nombre" required value=invitado.nombre)
+
+    div.mb-3
+      label.form-label(for="email") Email:
+      input.form-control(type="email" name="email" required value=invitado.email)
+
+    div.mb-3
+      label.form-label(for="telefono") Teléfono:
+      input.form-control(type="text" name="telefono" value=invitado.telefono)
+
+    div.mb-3
+      label.form-label(for="estado") Estado:
+      select.form-select(name="estado")
+        option(value="pendiente" selected=invitado.estado==='pendiente') Pendiente
+        option(value="confirmado" selected=invitado.estado==='confirmado') Confirmado
+        option(value="asistió" selected=invitado.estado==='asistió') Asistió
+
+    button.btn.btn-success(type="submit") Guardar
+
+  a.btn.btn-secondary.mt-3(href=`/invitados/vista`) Cancelar

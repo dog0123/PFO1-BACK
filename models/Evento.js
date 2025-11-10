@@ -1,7 +1,7 @@
 // models/Evento.js
 import mongoose from "mongoose";
 
-// 🔹 Estructura de un evento
+// Estructura de un evento
 const eventoSchema = new mongoose.Schema({
   nombre: { type: String, required: true },         // Nombre del evento (por ej: Casamiento de ...)
   fecha: { type: Date, required: true },            // Fecha del evento
@@ -14,33 +14,38 @@ const eventoSchema = new mongoose.Schema({
     required: true
   },
 
-  proveedores: [{                                   // Lista de proveedores involucrados
+  proveedores: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Proveedor"
+    ref: "Proveedor",
+    default: []
   }],
+
 
   tareas: [{                                        // Lista de tareas del evento
     type: mongoose.Schema.Types.ObjectId,
     ref: "Tarea"
   }],
 
-  invitados: [{                                     // Lista de invitados
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Invitado"
-  }],
+  invitados: [{
+      nombre: { type: String, required: true },
+      contacto: { type: String, default: "" }
+    }],
 
   presupuestoId: {                                  // Presupuesto asociado
     type: mongoose.Schema.Types.ObjectId,
     ref: "Presupuesto"
   },
 
-  descripcion: { type: String, default: "" },       // Información adicional
-  estado: {                                         // Estado general del evento
-    type: String,
-    enum: ["planificado", "en progreso", "finalizado"],
-    default: "planificado"
+  estadoId: {                                       // Estado
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Estado"
+  },
+
+  reporteId: {                                      // Reporte
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Reporte"
   }
-}, { timestamps: true });
+});
 
 // Exportamos el modelo
 export default mongoose.model("Evento", eventoSchema);

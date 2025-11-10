@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1.mb-4 Detalle del Cliente
+  
+  p
+    b Nombre:
+    |  #{cliente.nombre || '—'}
+  p
+    b Email:
+    |  #{cliente.email || '—'}
+  p
+    b Teléfono:
+    |  #{cliente.telefono || '—'}
+  p
+    b Dirección:
+    |  #{cliente.direccion || '—'}
+  p
+    b Observaciones:
+    |  #{cliente.observaciones || '—'}
+
+  a.btn.btn-warning.mt-3(href=`/clientes/${cliente._id}/editar`) Editar
+  form(action=`/clientes/${cliente._id}?_method=DELETE`, method='POST', style='display:inline;')
+    button.btn.btn-danger.mt-3(type='submit') Eliminar
+  a.btn.btn-secondary.mt-3.ms-2(href='/clientes/vista') Volver
+  

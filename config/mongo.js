@@ -7,8 +7,8 @@ import dotenv from 'dotenv';
 
 dotenv.config(); // carga variables del archivo .env
 
-// URI de conexión (por defecto usamos la local, pero despues podemos poner  la de Atlas)
-const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/eventify';
+// URI de conexión
+const MONGO_URI = process.env.MONGO_URI;
 
 // Función para conectar a MongoDB
 const connectDB = async () => {

@@ -1,11 +1,28 @@
-html 
-    title Proveedores
-    body 
-    h1 Lista de proveedores 
-    ul 
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  a.btn.btn-primary.mb-3(href='/proveedores/vista/nuevo') Agregar nuevo proveedor
+
+  if proveedores && proveedores.length
+    table.table.table-striped
+      thead
+        tr
+          th Nombre
+          th Teléfono
+          th Email
+          th Acciones
+      tbody
         each proveedor in proveedores
-            li
-                p= proveedor.nombre
-                p= proveedor.servicio
-                p= proveedor.telefono
-    
+          tr
+            td= proveedor.nombre
+            td= proveedor.servicio
+            td= proveedor.telefono || '—'
+            td= proveedor.email || '—'
+            td
+              a.btn.btn-info(href=`/proveedores/vista/${proveedor._id}`) Ver
+  else
+    p.text-muted No hay proveedores cargados.
+
+  a.btn.btn-secondary.mt-3(href='/') Volver

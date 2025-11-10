@@ -1,11 +1,29 @@
-html 
-    head
-    title Clientes
-    body
-        h1 Lista de Clientes
-        ul 
-            each cliente in clientes 
-                li 
-                p= cliente.nombre
-                p= cliente.telefono
-                p= cliente.email
+extends layout
+
+block content
+  h1.mb-4= titulo
+
+  a.btn.btn-primary.mb-3(href='/clientes/vista/nuevo') Agregar nuevo Cliente
+
+  if clientes.length
+    table.table.table-striped
+      thead
+        tr
+          th Nombre
+          th Email
+          th Teléfono
+          th Dirección
+          th Acciones
+      tbody
+        each cliente in clientes
+          tr
+            td= cliente.nombre
+            td= cliente.email
+            td= cliente.telefono
+            td= cliente.direccion
+            td
+              a.btn.btn-info.btn-sm(href=`/clientes/vista/${cliente._id}`) Ver
+  else
+    p No hay clientes cargados aún.
+
+  a.btn.btn-secondary.mt-3(href='/') Volver

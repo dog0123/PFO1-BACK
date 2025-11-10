@@ -12,15 +12,6 @@ const itemSchema = new mongoose.Schema({
   cantidad: { type: Number, default: 1 },
   precioUnitario: { type: Number, required: true },
 
-  // Relaciones entre Cliente y Proveedor
-  proveedorId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Proveedor"
-  },
-  clienteId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Cliente"
-  }
 });
 
 // Esquema principal del presupuesto

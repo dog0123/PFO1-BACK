@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    h1.mb-4= titulo
+
+    p
+        b Encabezado:
+        |  #{reporte.encabezado || '—'}
+    p
+        b Reporte:
+        |  #{reporte.reporte || '—'}
+    p
+        b Feedback del supervisor:
+        |  #{reporte.feedbackSupervisorDeEvento || '—'}
+
+    if reporte.encuestasDeSatisfaccion && reporte.encuestasDeSatisfaccion.length
+      b Encuestas de satisfaccion:
+      ul.list-group
+        each encuesta in reporte.encuestasDeSatisfaccion
+          li.list-group-item= JSON.stringify(encuesta)
+    else
+      p.mt-3 No hay encuestas registradas.
+
+    a.btn.btn-warning.mt-3(href=`/reportes/${reporte._id}/editar`) Editar
+    
+    a.btn.btn-secondary.mt-3.ms-2(href='/reportes/vista') Volver

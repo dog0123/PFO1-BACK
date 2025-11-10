@@ -1,4 +1,5 @@
 // controllers/eventoController.js
+import Estado from "../models/Estado.js";
 import Evento from "../models/Evento.js";
 
 // Obtener todos los eventos (listado general)
@@ -33,8 +34,23 @@ export const obtenerEvento = async (req, res) => {
 // Crear un nuevo evento
 export const crearEvento = async (req, res) => {
   try {
-    const nuevoEvento = new Evento(req.body);
+    const estadoInicial = new Estado();
+    const reporteInicial = new Reporte();
+    await estadoInicial.save();
+    await reporteInicial.save();
+
+     const nuevoEvento = new Evento({
+      ...req.body,
+      estadoId: estadoInicial._id,
+      reporteId: reporteInicial._id
+    });
     await nuevoEvento.save();
+
+    reporteInicial.eventoId = nuevoEvento._id;
+    estadoInicial.eventoId = nuevoEvento._id;
+    await estadoInicial.save();
+    await reporteInicial.save();
+
     res.status(201).json(nuevoEvento);
   } catch (error) {
     res.status(400).json({ mensaje: "Error al crear evento", error });

@@ -1,23 +1,57 @@
+//- extends layout
+
+//- block content
+//-   h1= titulo
+//-   form(method="post", action=action)
+//-     div
+//-       label(for="titulo") Título:
+//-       input(type="text", name="titulo", id="titulo", value=(tarea && tarea.titulo))
+//-     br
+//-     div
+//-       label(for="descripcion") Descripción:
+//-       textarea(name="descripcion") #{tarea && tarea.descripcion}
+//-     br
+//-     div
+//-       label(for="eventoId") Evento (ID):
+//-       input(type="text", name="eventoId", id="eventoId", value=(tarea && tarea.eventoId))
+//-     br
+//-     div
+//-       label(for="responsable") Responsable:
+//-       input(type="text", name="responsable", id="responsable", value=(tarea && tarea.responsable))
+//-     br
+//-     button(type="submit") Enviar
+
 extends layout
 
 block content
-  h1= titulo
-  form(method="post", action=action)
-    div
-      label(for="titulo") Título:
-      input(type="text", name="titulo", id="titulo", value=(tarea && tarea.titulo))
-    br
-    div
-      label(for="descripcion") Descripción:
-      textarea(name="descripcion") #{tarea && tarea.descripcion}
-    br
-    div
-      label(for="eventoId") Evento (ID):
-      input(type="text", name="eventoId", id="eventoId", value=(tarea && tarea.eventoId))
-    br
-    div
-      label(for="responsable") Responsable:
-      input(type="text", name="responsable", id="responsable", value=(tarea && tarea.responsable))
-    br
-    button(type="submit") Enviar
+  h1.mb-4= titulo
+
+  form(action= tarea._id ? `/tareas/${tarea._id}?_method=PUT` : '/tareas', method='POST')
+    div.mb-3
+      label.form-label(for='titulo') Titulo
+      input.form-control(type='text', name='titulo', id='titulo', required, value=tarea.titulo || '')
+
+    div.mb-3
+      label.form-label(for='descripcion') Descripcion
+      input.form-control(type='text', name='descripcion', id='descripcion', value=tarea.descripcion || '')
+
+    div.mb-3
+      label.form-label(for='estado') Estado
+      input.form-control(type='text', name='estado', id='estado', value=tarea.estado || '')
+
+    div.mb-3
+      label.form-label(for='responsable') Responsable
+      input.form-control(type='text', name='responsable', id='responsable', value=tarea.responsable || '')
+
+    div.mb-3
+      label.form-label(for='fechaInicio') Fecha Inicio
+      input.form-control(type='date', name='fechaInicio', id='fechaInicio', value=tarea.fechaInicio || '')
+
+    div.mb-3
+      label.form-label(for='fechaFin') Fecha Fin
+      input.form-control(type='date', name='fechaFin', id='fechaFin', value=tarea.fechaFin || '')
+
+    button.btn.btn-success(type='submit') Guardar
+
+  a.btn.btn-secondary.mt-3(href='/tareas/vista') Volver a la lista
 

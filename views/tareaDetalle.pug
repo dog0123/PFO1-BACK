@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  h1.mb-4 Detalle de la Tarea
+  
+  p
+    b Titulo:
+    |  #{tarea.titulo || '—'}
+  p
+    b Descripcion:
+    |  #{tarea.descripcion || '—'}
+  p
+    b Estado:
+    |  #{tarea.estado || '—'}
+  p
+    b Responsable:
+    |  #{tarea.responsable || '—'}
+  p
+    b Fecha de inicio:
+    |  #{tarea.fechaInicio || '—'}
+
+  p
+    b Fecha de fin:
+    |  #{tarea.fechaFin || '—'}
+
+  a.btn.btn-warning.mt-3(href=`/tareas/${tarea._id}/editar`) Editar
+  form(action=`/tareas/${tarea._id}?_method=DELETE`, method='POST', style='display:inline;')
+    button.btn.btn-danger.mt-3(type='submit') Eliminar
+  a.btn.btn-secondary.mt-3.ms-2(href='/tareas/vista') Volver

@@ -19,8 +19,8 @@ block content
     b Observaciones:
     |  #{cliente.observaciones || '—'}
 
-  a.btn.btn-warning.mt-3(href=`/clientes/${cliente._id}/editar`) Editar
-  form(action=`/clientes/${cliente._id}?_method=DELETE`, method='POST', style='display:inline;')
+  a.btn.btn-warning.mt-3(href=`/clientes/vista/${cliente._id}/editar`) Editar
+  form(action=`/clientes/vista/${cliente._id}?_method=DELETE`, method='POST', style='display:inline;')
     button.btn.btn-danger.mt-3(type='submit') Eliminar
   a.btn.btn-secondary.mt-3.ms-2(href='/clientes/vista') Volver
   

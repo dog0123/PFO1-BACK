@@ -9,7 +9,7 @@ block content
     method='POST'
   )
     div.mb-3
-      label.form-label(for='nombre') Nombre
+      label.form-label.fs-4.fw-bold(for='nombre') Nombre
       input.form-control(
         type='text',
         id='nombre',
@@ -19,7 +19,7 @@ block content
       )
 
     div.mb-3
-      label.form-label(for='fecha') Fecha
+      label.form-label.fs-4.fw-bold(for='fecha') Fecha
       // si no hay fechaFormateada, deja vacío
       input.form-control(
         type='date',
@@ -30,25 +30,28 @@ block content
       )
 
     div.mb-3
-      label.form-label(for='lugar') Lugar
+      label.form-label.fs-4.fw-bold(for='lugar') Lugar
       input.form-control(
         type='text',
         id='lugar',
         name='lugar',
         value=evento.lugar || ''
-        
       )
 
     div.mb-3
-      a.form-label(href=`/eventos/${evento._id}/estado`) Estado
-      if evento.estadoId
-        p.form-control-plaintext= evento.estadoId.estadoActual
-      else
-        p.form-control-plaintext Sin estado
-
-
-    div.mb-3
-      label.form-label Cliente
+    if !evento.clienteId
+      div.d-flex.align-items-center(style="gap: 10px;")
+        label.form-label.fs-4.fw-bold Cliente
+        a.form-label(href=`/eventos/vista/${evento._id}/cliente`) Ver
+      // Campo readonly con backup
+      input.form-control(
+        type="text",
+        disabled,
+        value=(evento.clienteBackup && evento.clienteBackup.nombre ?
+        evento.clienteBackup.nombre + " (Cliente eliminado)" : "Cliente eliminado")
+      )
+    else
+      label.form-label.fs-4.fw-bold Cliente
       select.form-select(name='clienteId' id='clienteId' required)
         option(value='') Seleccionar cliente...
         each cliente in clientes
@@ -58,29 +61,55 @@ block content
           )= cliente.nombre
 
     div.mb-3
-      a.form-label(href=`/eventos/${evento._id}/proveedores`) Proveedores
-      ul
-        each proveedor in evento.proveedores
-          li= proveedor.nombre || proveedor.toString()
-    
-    if evento.tareas && evento.tareas.length
-      div.mb-3
-        label.form-label Tareas
-        ul
-          each tarea in evento.tareas
-            li= tarea.nombre || tarea.toString()
+      div.d-flex.align-items-center(style="gap: 10px;")
+        label.form-label.fs-4.fw-bold Estado
+        a.form-label(href=`/eventos/vista/${evento._id}/estado`) Ver
 
-    if evento.invitados && evento.invitados.length
-      div.mb-3
-        a.form-label(href=`/eventos/${evento._id}/invitados`) Invitados
+      if evento.estadoId
+        p.form-control-plaintext= evento.estadoId.estadoActual
+      else
+        p.form-control-plaintext Sin estado
+
+    div.mb-3
+      div.d-flex.align-items-center(style="gap: 10px;")
+        label.form-label.fs-4.fw-bold Proveedores
+        a.form-label(href=`/eventos/vista/${evento._id}/proveedores`) Ver
+      if evento.proveedores && evento.proveedores.length
+        ul
+          each prov in evento.proveedores
+            if prov.proveedorId
+              li= prov.proveedorId.nombre
+            else
+              li #{prov.nombre} (proveedor no activo)
+      else
+        p.form-control-plaintext No hay proveedores agregados
+
+    
+    div.mb-3
+      div.d-flex.align-items-center(style="gap: 10px;")
+        label.form-label.fs-4.fw-bold Invitados
+        a.form-label(href=`/eventos/vista/${evento._id}/invitados`) Ver
+      if evento.invitados && evento.invitados.length
         ul
           each invitado in evento.invitados
             li= invitado.nombre || invitado.toString()
+      else
+        p.form-control-plaintext No hay invitados agregados
+
+    div.mb-3
+      a.btn.btn-outline-primary.btn-sm(
+        href=`/presupuestos/vista/${evento.presupuestoId._id}`
+      ) Ver presupuesto
+
+    div.mb-3
+      a.btn.btn-outline-primary.btn-sm(
+        href=`/reportes/vista/${evento.reporteId._id}?from=evento`
+      ) Ver reporte
 
     button.btn.btn-success(type='submit') Guardar Cambios
 
   // Formulario de eliminación del evento
-  form(action=`/eventos/${evento._id}?_method=DELETE`, method='POST', style='margin-top: 20px;')
+  form(action=`/eventos/vista/${evento._id}?_method=DELETE`, method='POST', style='margin-top: 20px;')
     button.btn.btn-danger(type='submit') Eliminar Evento
 
   a.btn.btn-secondary.mt-3(href='/eventos/vista') Volver a la lista

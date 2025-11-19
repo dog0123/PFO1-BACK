@@ -1,57 +1,99 @@
-// controllers/tareasController.js
-import Tarea from "../models/Tarea.js";
+import {
+  obtenerTodasLasTareasService,
+  obtenerTareaPorIdService,
+  obtenerTareasPorEventoService,
+  crearTareaService,
+  actualizarTareaService,
+  eliminarTareaService
+} from "../services/tareaService.js";
 
-// Crear una nueva tarea
+// Obtener todas las tareas
+export const obtenerTodasLasTareas = async (req, res) => {
+  try {
+    const tareas = await obtenerTodasLasTareasService();
+    res.json(tareas);
+  } catch (error) {
+    console.error("Error al obtener tareas:", error);
+    res.status(500).json({ mensaje: "Error al obtener tareas" });
+  }
+};
+
+// Obtener tarea por ID
+export const obtenerTareaPorId = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const tarea = await obtenerTareaPorIdService(id);
+
+    if (!tarea) {
+      return res.status(404).json({ mensaje: "Tarea no encontrada" });
+    }
+
+    res.json(tarea);
+  } catch (error) {
+    console.error("Error al obtener tarea:", error);
+    res.status(500).json({ mensaje: "Error al obtener la tarea" });
+  }
+};
+
+// Obtener tareas por evento
+export const obtenerTareasPorEvento = async (req, res) => {
+  try {
+    const eventoId = req.params.eventoId;
+    const tareas = await obtenerTareasPorEventoService(eventoId);
+
+    res.json(tareas);
+  } catch (error) {
+    console.error("Error al obtener tareas del evento:", error);
+    res.status(500).json({ mensaje: "Error al obtener tareas del evento" });
+  }
+};
+
+// Crear nueva tarea
 export const crearTarea = async (req, res) => {
   try {
-    const tarea = new Tarea(req.body); // espera el body con titulo, eventoId, etc.
-    await tarea.save();
-    res.status(201).json(tarea);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-};
+    const data = req.body;
 
-// Listar todas las tareas (opcional: filter por evento, event=...)
-export const listarTareas = async (req, res) => {
-  try {
-    const { event } = req.query;
-    const filtro = event ? { eventoId: event } : {};
-    const tareas = await Tarea.find(filtro).populate("eventoId"); // populate solo si Evento está en Mongo
-    res.json(tareas);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
+    const nuevaTarea = await crearTareaService(data);
 
-// Obtener una tarea por id
-export const obtenerTarea = async (req, res) => {
-  try {
-    const tarea = await Tarea.findById(req.params.id).populate("eventoId");
-    if (!tarea) return res.status(404).json({ msg: "Tarea no encontrada" });
-    res.json(tarea);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(201).json(nuevaTarea);
+  } catch (error) {
+    console.error("Error al crear tarea:", error);
+    res.status(500).json({ mensaje: "Error al crear tarea" });
   }
 };
 
 // Actualizar tarea
 export const actualizarTarea = async (req, res) => {
   try {
-    const tarea = await Tarea.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(tarea);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
+    const id = req.params.id;
+    const cambios = req.body;
+
+    const tareaActualizada = await actualizarTareaService(id, cambios);
+
+    if (!tareaActualizada) {
+      return res.status(404).json({ mensaje: "Tarea no encontrada" });
+    }
+
+    res.json(tareaActualizada);
+  } catch (error) {
+    console.error("Error al actualizar tarea:", error);
+    res.status(500).json({ mensaje: "Error al actualizar tarea" });
   }
 };
 
 // Eliminar tarea
 export const eliminarTarea = async (req, res) => {
   try {
-    await Tarea.findByIdAndDelete(req.params.id);
-    res.json({ msg: "Tarea eliminada" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
+    const id = req.params.id;
+    const tareaEliminada = await eliminarTareaService(id);
+
+    if (!tareaEliminada) {
+      return res.status(404).json({ mensaje: "Tarea no encontrada" });
+    }
+
+    res.json({ mensaje: "Tarea eliminada correctamente" });
+  } catch (error) {
+    console.error("Error al eliminar tarea:", error);
+    res.status(500).json({ mensaje: "Error al eliminar tarea" });
   }
 };
-

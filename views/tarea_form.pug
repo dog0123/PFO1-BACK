@@ -26,7 +26,7 @@ extends layout
 block content
   h1.mb-4= titulo
 
-  form(action= tarea._id ? `/tareas/${tarea._id}?_method=PUT` : '/tareas', method='POST')
+  form(action= tarea._id ? `/tareas/vista/${tarea._id}?_method=PUT` : '/tareas/vista', method='POST')
     div.mb-3
       label.form-label(for='titulo') Titulo
       input.form-control(type='text', name='titulo', id='titulo', required, value=tarea.titulo || '')
@@ -37,7 +37,11 @@ block content
 
     div.mb-3
       label.form-label(for='estado') Estado
-      input.form-control(type='text', name='estado', id='estado', value=tarea.estado || '')
+      select.form-select(name='estado', id='estado', required)
+        option(value='pendiente' selected=tarea.estado === 'pendiente') Pendiente
+        option(value='en progreso' selected=tarea.estado === 'en progreso') En progreso
+        option(value='completada' selected=tarea.estado === 'completada') Completada
+
 
     div.mb-3
       label.form-label(for='responsable') Responsable
@@ -50,6 +54,17 @@ block content
     div.mb-3
       label.form-label(for='fechaFin') Fecha Fin
       input.form-control(type='date', name='fechaFin', id='fechaFin', value=tarea.fechaFin || '')
+
+    div.mb-3
+      label.form-label(for='eventoId') Evento asociado
+      select.form-select(name='eventoId', id='eventoId', required)
+        option(value='') Seleccionar evento...
+        each evento in eventos
+          option(
+            value=evento._id,
+            selected=tarea.eventoId && evento._id.toString() === tarea.eventoId.toString()
+          )= evento.nombre
+
 
     button.btn.btn-success(type='submit') Guardar
 

@@ -16,7 +16,7 @@ const itemSchema = new mongoose.Schema({
 
 // Esquema principal del presupuesto
 const presupuestoSchema = new mongoose.Schema({
-  nombre: { type: String, required: true },                // Nombre del presupuesto
+  nombre: { type: String, default: "Nuevo presupuesto" },   // Nombre del presupuesto
   eventoId: {                                              // Relación con el evento
     type: mongoose.Schema.Types.ObjectId,
     ref: "Evento",

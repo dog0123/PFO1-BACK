@@ -16,7 +16,7 @@ block content
             td= invitado.nombre
             td= invitado.contacto
             td
-              form(method="POST", action=`/eventos/${evento._id}/invitados/${i}?_method=DELETE`, style="display:inline;")
+              form(method="POST", action=`/eventos/vista/${evento._id}/invitados/${i}?_method=DELETE`, style="display:inline;")
                 button.btn.btn-sm.btn-danger(type="submit") Quitar
   else
     p.text-muted No hay invitados registrados para este evento.
@@ -24,7 +24,7 @@ block content
   hr
 
   h3.mt-4 Agregar nuevo invitado
-  form(method="POST" action=`/eventos/${evento._id}/invitados`)
+  form(method="POST" action=`/eventos/vista/${evento._id}/invitados`)
     .mb-3
       label.form-label(for="nombre") Nombre:
       input.form-control(type="text" name="nombre" id="nombre" required)

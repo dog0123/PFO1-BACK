@@ -1,91 +1,87 @@
-// controllers/eventoController.js
-import Estado from "../models/Estado.js";
-import Evento from "../models/Evento.js";
+import {
+  crearEventoService,
+  obtenerEventoPorIdService,
+  obtenerEventoConProveedoresService,
+  obtenerEventoPorIdCompletoService,
+  obtenerEventosService,
+  actualizarEventoService,
+  eliminarEventoService
+} from "../services/eventoService.js";
 
-// Obtener todos los eventos (listado general)
-export const listarEventos = async (req, res) => {
-  try {
-    const eventos = await Evento.find()
-      .populate("proveedores")
-      .populate("tareas")
-      .populate("invitados")
-      .populate("presupuestoId");
-    res.status(200).json(eventos);
-  } catch (error) {
-    res.status(500).json({ mensaje: "Error al listar eventos", error });
-  }
-};
-
-// Obtener un evento por ID
-export const obtenerEvento = async (req, res) => {
-  try {
-    const evento = await Evento.findById(req.params.id)
-      .populate("proveedores")
-      .populate("tareas")
-      .populate("invitados")
-      .populate("presupuestoId");
-    if (!evento) return res.status(404).json({ mensaje: "Evento no encontrado" });
-    res.status(200).json(evento);
-  } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener evento", error });
-  }
-};
-
-// Crear un nuevo evento
 export const crearEvento = async (req, res) => {
   try {
-    const estadoInicial = new Estado();
-    const reporteInicial = new Reporte();
-    await estadoInicial.save();
-    await reporteInicial.save();
-
-     const nuevoEvento = new Evento({
-      ...req.body,
-      estadoId: estadoInicial._id,
-      reporteId: reporteInicial._id
-    });
-    await nuevoEvento.save();
-
-    reporteInicial.eventoId = nuevoEvento._id;
-    estadoInicial.eventoId = nuevoEvento._id;
-    await estadoInicial.save();
-    await reporteInicial.save();
-
+    const data = req.body;
+    const nuevoEvento = await crearEventoService(data);
     res.status(201).json(nuevoEvento);
   } catch (error) {
-    res.status(400).json({ mensaje: "Error al crear evento", error });
+    console.error("Error al crear evento:", error);
+    res.status(500).json({ error: "Error al crear evento" });
   }
 };
 
-// Actualizar un evento existente
+export const obtenerEvento = async (req, res) => {
+  try {
+    const evento = await obtenerEventoPorIdService(req.params.id);
+    if (!evento) return res.status(404).json({ error: "Evento no encontrado" });
+    res.json(evento);
+  } catch (error) {
+    console.error("Error al obtener evento:", error);
+    res.status(500).json({ error: "Error al obtener evento" });
+  }
+};
+
+export const obtenerEventoCompleto = async (req, res) => {
+  try {
+    const evento = await obtenerEventoPorIdCompletoService(req.params.id);
+    if (!evento) return res.status(404).json({ error: "Evento no encontrado" });
+    res.json(evento);
+  } catch (error) {
+    console.error("Error al obtener evento completo:", error);
+    res.status(500).json({ error: "Error al obtener evento completo" });
+  }
+};
+
+export const obtenerEventoConProveedores = async (req, res) => {
+  try {
+    const evento = await obtenerEventoConProveedoresService(req.params.id);
+    if (!evento) return res.status(404).json({ error: "Evento no encontrado" });
+    res.json(evento);
+  } catch (error) {
+    console.error("Error al obtener proveedores del evento:", error);
+    res.status(500).json({ error: "Error al obtener proveedores del evento" });
+  }
+};
+
+export const obtenerEventos = async (req, res) => {
+  try {
+    const eventos = await obtenerEventosService();
+    res.json(eventos);
+  } catch (error) {
+    console.error("Error al obtener eventos:", error);
+    res.status(500).json({ error: "Error al obtener eventos" });
+  }
+};
+
 export const actualizarEvento = async (req, res) => {
   try {
-    const eventoActualizado = await Evento.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!eventoActualizado) return res.status(404).json({ mensaje: "Evento no encontrado" });
-    res.status(200).json(eventoActualizado);
+    const cambios = req.body;
+    const eventoActualizado = await actualizarEventoService(req.params.id, cambios);
+
+    if (!eventoActualizado) return res.status(404).json({ error: "Evento no encontrado" });
+
+    res.json(eventoActualizado);
   } catch (error) {
-    res.status(400).json({ mensaje: "Error al actualizar evento", error });
+    console.error("Error al actualizar evento:", error);
+    res.status(500).json({ error: "Error al actualizar evento" });
   }
 };
 
-// Eliminar un evento
 export const eliminarEvento = async (req, res) => {
   try {
-    const eliminado = await Evento.findByIdAndDelete(req.params.id);
-    if (!eliminado) return res.status(404).json({ mensaje: "Evento no encontrado" });
-    res.status(204).send(); // Sin contenido
+    const result = await eliminarEventoService(req.params.id);
+    res.json(result);
   } catch (error) {
-    res.status(500).json({ mensaje: "Error al eliminar evento", error });
-  }
-};
-
-// Obtener todas las tareas de un evento 
-export const obtenerTareasPorEvento = async (req, res) => {
-  try {
-    const evento = await Evento.findById(req.params.id).populate("tareas");
-    if (!evento) return res.status(404).json({ mensaje: "Evento no encontrado" });
-    res.status(200).json(evento.tareas);
-  } catch (error) {
-    res.status(500).json({ mensaje: "Error al obtener tareas del evento", error });
+    console.error("Error al eliminar evento:", error);
+    res.status(500).json({ error: "Error al eliminar evento" });
   }
 };

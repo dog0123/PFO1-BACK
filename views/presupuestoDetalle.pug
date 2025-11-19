@@ -9,7 +9,7 @@ block content
       |  #{presupuesto.nombre || '—'}
     p
       b Evento:
-      |  #{(presupuesto.eventoId && presupuesto.eventoId.nombre) ? presupuesto.eventoId.nombre : '—'}
+      |  #{evento.nombre || '—'}
     p
       b Fecha de Emisión:
       |  #{presupuesto.fechaEmision ? new Date(presupuesto.fechaEmision).toLocaleDateString() : '—'}
@@ -45,6 +45,6 @@ block content
       p.mt-3 No hay ítems cargados.
 
     a.btn.btn-warning.mt-3(href=`/presupuestos/${presupuesto._id}/editar`) Editar
-    a.btn.btn-secondary.mt-3.ms-2(href='/presupuestos/vista') Volver
+    a.btn.btn-secondary.mt-3.ms-2(href=volverUrl) Volver
   else
     p.text-danger Presupuesto no encontrado.

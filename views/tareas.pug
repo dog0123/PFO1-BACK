@@ -16,9 +16,9 @@
 extends layout
 
 block content
-  h1.mb-4= Titulo
+  h1.mb-4= titulo
 
-  a.btn.btn-primary.mb-3(href='/tareas/nueva') Nueva Tarea
+  a.btn.btn-primary.mb-3(href='/tareas/vista/nueva') Nueva Tarea
 
   
   table.table.table-striped
@@ -28,6 +28,7 @@ block content
         th Descripción
         th Responsable
         th Estado
+        th Evento
         th Acciones
     tbody
       each tarea in tareas
@@ -36,6 +37,7 @@ block content
           td= tarea.descripcion
           td= tarea.responsable
           td= tarea.estado
+          td= tarea.eventoNombre
           td
             a.btn.btn-info.btn-sm(href=`/tareas/vista/${tarea._id}`) Ver
       else

@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1.mb-4 Nuevo Evento
+
+  form(action="/eventos/vista", method="POST")
+    div.mb-3
+      label.form-label(for="nombre") Nombre del Evento
+      input.form-control(
+        type="text",
+        id="nombre",
+        name="nombre",
+        required
+      )
+
+    div.mb-3
+      label.form-label(for="fecha") Fecha
+      input.form-control(
+        type="date",
+        id="fecha",
+        name="fecha",
+        required
+      )
+
+    div.mb-3
+      label.form-label(for="lugar") Lugar
+      input.form-control(
+        type="text",
+        id="lugar",
+        name="lugar",
+        required
+      )
+
+    div.mb-3
+      label.form-label(for="clienteId") Cliente
+      select.form-select(id="clienteId", name="clienteId", required)
+        option(value="") Seleccionar cliente...
+        each cliente in clientes
+          option(value=cliente._id)= cliente.nombre
+
+    button.btn.btn-success(type="submit") Crear Evento
+
+  a.btn.btn-secondary.mt-3(href="/eventos/vista") Volver

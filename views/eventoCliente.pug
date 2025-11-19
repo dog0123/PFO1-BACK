@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1.mb-4 Cambiar cliente: #{evento.nombre}
+
+  // Mostrar el cliente eliminado
+  if evento.clienteBackup && evento.clienteBackup.nombre
+    p
+      b Cliente eliminado: 
+      | #{evento.clienteBackup.nombre}
+  else
+    p.text-danger No hay datos del cliente eliminado
+
+  // Selección de nuevo cliente
+  form(method="POST", action=`/eventos/vista/${evento._id}/cliente`)
+    div.mb-3
+      label.form-label(for="clienteId") Elegir nuevo cliente
+      select.form-select(name="clienteId" id="clienteId" required)
+        option(value="") Seleccionar cliente...
+
+        each cliente in clientes
+          option(value=cliente._id)= cliente.nombre
+
+    button.btn.btn-success.mt-3(type="submit") Guardar nuevo cliente
+
+  a.btn.btn-secondary.mt-3(href=`/eventos/vista/${evento._id}`) Cancelar

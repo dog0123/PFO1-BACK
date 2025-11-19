@@ -3,7 +3,7 @@ extends layout
 block content
   h1.mb-4= titulo
 
-  form(action= reporte._id ? `/reportes/${reporte._id}?_method=PUT` : '/reportes/vista', method='POST')
+  form(action= reporte._id ? `/reportes/vista/${reporte._id}?_method=PUT` : '/reportes/vista', method='POST')
     div.mb-3
       label.form-label(for='encabezado') Encabezado
       input.form-control(type='text', name='encabezado', id='encabezado', required, value=reporte.encabezado || '')
@@ -26,6 +26,14 @@ block content
             selected=reporte.eventoId && evento._id.toString() === reporte.eventoId.toString()
           )= evento.nombre 
 
+    div.mb-3
+      if reporte.encuestasDeSatisfaccion && reporte.encuestasDeSatisfaccion.length
+      div.d-flex.align-items-center(style="gap: 10px;")
+        label.form-label Encuestas de satisfaccion:
+        a.form-label(href=`/reportes/vista/${reporte._id}/encuesta`) Agregar nueva
+      ul.list-group
+        each encuesta in reporte.encuestasDeSatisfaccion
+          li.list-group-item= JSON.stringify(encuesta)
 
     button.btn.btn-success(type='submit') Guardar
 

@@ -12,8 +12,7 @@ import proveedorRoutes from './routes/proveedores.js';
 import eventoRoutes from './routes/eventos.js';
 import presupuestoRoutes from './routes/presupuestos.js';
 import tareasRoutes from './routes/tareas.js';
-import clienteRoutes from './routes/clientes.js'; 
-import invitadoRoutes from './routes/invitados.js';
+import clienteRoutes from './routes/clientes.js';
 import estadoRoutes from "./routes/estados.js";
 import reporteRoutes from "./routes/reportes.js";
 
@@ -43,7 +42,6 @@ app.use('/eventos', eventoRoutes);
 app.use('/presupuestos', presupuestoRoutes);
 app.use('/tareas', tareasRoutes);
 app.use('/clientes', clienteRoutes);
-app.use('/invitados', invitadoRoutes);
 app.use("/estados", estadoRoutes);
 app.use("/reportes", reporteRoutes);
 

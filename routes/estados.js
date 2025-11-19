@@ -1,18 +1,18 @@
 import express from "express";
 import {
-  listarEstados,
-  obtenerEstadoPorId,
-  crearEstado,
-  actualizarEstado,
-  eliminarEstado
-} from "../controllers/estadoController.js";
+  obtenerEstadoPorEvento,
+  actualizarEstado
+} from "../controllers/estadosController.js";
+import {
+  mostrarEstadoEventoView,
+  actualizarEstadoEventoView
+} from "../controllers/estadosViewsController.js";
 
 const router = express.Router();
 
-router.get("/", listarEstados);
-router.get("/:id", obtenerEstadoPorId);
-router.post("/", crearEstado);
+router.get("/:eventoId/vista", mostrarEstadoEventoView);
+router.post("/:eventoId/vista", actualizarEstadoEventoView);
+router.get("/:id", obtenerEstadoPorEvento);
 router.put("/:id", actualizarEstado);
-router.delete("/:id", eliminarEstado);
 
 export default router;

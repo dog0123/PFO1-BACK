@@ -3,8 +3,6 @@ extends layout
 block content
   h1.mb-4 Lista de Presupuestos
 
-  a.btn.btn-primary.mb-3(href='/presupuestos/vista/nuevo') Nuevo Presupuesto
-
   if presupuestos.length
     table.table.table-striped
       thead
@@ -19,12 +17,12 @@ block content
         each presupuesto in presupuestos
           tr
             td= presupuesto.nombre
-            td= presupuesto.eventoId ? presupuesto.eventoId.nombre : '—'
+            td= presupuesto.eventoNombre
             td= new Date(presupuesto.fechaEmision).toLocaleDateString('es-AR')
             td= presupuesto.estado
             td $#{presupuesto.totalGeneral.toFixed(2)}
             td
-              a.btn.btn-sm.btn-info(href=`/presupuestos/vista/${presupuesto._id}`) Ver              
+              a.btn.btn-sm.btn-info(href=`/presupuestos/vista/${presupuesto._id}?from=listado`) Ver              
   else
     p.text-muted No hay presupuestos cargados aún.
 

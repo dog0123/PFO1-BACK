@@ -1,0 +1,64 @@
+extends layout
+
+block content
+  h1.mb-4 Agregar encuesta de satisfacción
+
+  form(action=`/reportes/vista/${reporte._id}/encuesta`, method="POST")
+    // Contenedor donde se agregan los campos dinámicos
+    div#fields-container
+
+      // Campo inicial
+      div.field-row.mb-3
+        input.form-control(type="text", name="keys[]", placeholder="Descripcion" required oninput="validateForm()")
+        input.form-control.mt-2(type="text", name="values[]", placeholder="Puntaje" required oninput="validateForm()")
+        button.btn.btn-danger.btn-sm.mt-2(type="button" onclick="removeField(this)") Eliminar
+
+    // Botón para agregar un campo nuevo
+    button#add-field-btn.btn.btn-secondary.mt-3(type="button") Agregar otro campo
+
+    hr
+
+    // Enviar
+    button#submit-btn.btn.btn-primary.mt-2(type="submit" disabled) Guardar encuesta
+
+  a.btn.btn-outline-secondary.mt-3(href=`/reportes/vista/${reporte._id}/editar`) Volver
+
+  // Script dinámico
+  script.
+    function validateForm() {
+      const keys = document.querySelectorAll('input[name="keys[]"]');
+      const values = document.querySelectorAll('input[name="values[]"]');
+      const submitBtn = document.getElementById('submit-btn');
+
+      let valid = false;
+
+      // Chequear que haya al menos un par completo
+      for (let i = 0; i < keys.length; i++) {
+        if (keys[i].value.trim() !== "" && values[i].value.trim() !== "") {
+          valid = true;
+          break;
+        }
+      }
+
+      submitBtn.disabled = !valid;
+    }
+
+    document.getElementById('add-field-btn').addEventListener('click', () => {
+      const container = document.getElementById('fields-container');
+      const div = document.createElement('div');
+      div.classList.add('field-row','mb-3');
+      div.innerHTML = `
+        <input class="form-control" type="text" name="keys[]" placeholder="Descripcion" required oninput="validateForm()">
+        <input class="form-control mt-2" type="text" name="values[]" placeholder="Puntaje" required oninput="validateForm()">
+        <button class="btn btn-danger btn-sm mt-2" type="button" onclick="removeField(this)">Eliminar</button>
+      `;
+      container.appendChild(div);
+      validateForm();
+    });
+
+    function removeField(button) {
+      button.parentElement.remove();
+      validateForm();
+    }
+    
+    validateForm();

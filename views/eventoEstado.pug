@@ -3,7 +3,7 @@ extends layout
 block content
   h1.mb-4= titulo
 
-  form(action=`/eventos/${evento._id}/estado`, method='POST')
+  form(action=`/eventos/vista/${evento._id}/estado`, method='POST')
     div.mb-3
       label.form-label(for='estadoActual') Estado actual
       input.form-control(
@@ -52,11 +52,14 @@ block content
         li.list-group-item
           p.mb-1
             b Estado anterior:
-            |  #{h.estadoAnterior || 'Desconocido'}
-          if h.descripcionAnterior
+            |  #{h.estadoActual || 'Desconocido'}
+          if h.descripcion
             p.mb-1
-              b Descripción anterior:
-              |  #{h.descripcionAnterior}
+              b Descripción:
+              |  #{h.descripcion}
+          if h.usuario
+              b Usuario:
+              |  #{h.usuario}
           if h.fechaCambio
             p.text-muted Fecha del cambio: #{new Date(h.fechaCambio).toLocaleDateString()}
 

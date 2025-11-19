@@ -8,24 +8,33 @@ const eventoSchema = new mongoose.Schema({
   lugar: { type: String, required: true },          // Lugar o salón donde se realiza
 
   // Relaciones con otros módulos:
-  clienteId: {                                      // El cliente que contrata el evento
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Cliente",
-    required: true
-  },
+  clienteId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Cliente",
+  required: false
+},
+clienteBackup: {
+  nombre: { type: String, default: "" },
+  telefono: { type: String, default: "" },
+  email: { type: String, default: "" },
+},
 
-  proveedores: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Proveedor",
-    default: []
-  }],
-
-
-  tareas: [{                                        // Lista de tareas del evento
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Tarea"
-  }],
-
+  proveedores: [
+  {
+    proveedorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Proveedor",
+      default: null
+    },
+    nombre: { type: String, default: "" },
+    servicio: { type: String, default: "" },
+    telefono: { type: String, default: "" },
+    email: { type: String, default: "" },
+    direccion: { type: String, default: "" },
+    eliminado: { type: Boolean, default: false },
+    eliminadoEn: { type: Date, default: null }
+  }
+],
   invitados: [{
       nombre: { type: String, required: true },
       contacto: { type: String, default: "" }

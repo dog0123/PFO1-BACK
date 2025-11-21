@@ -5,7 +5,7 @@ import {
   actualizarPresupuestoService
 } from "../services/presupuestoService.js";
 
-// Obtener todos los presupuestos
+
 export const obtenerTodosLosPresupuestos = async (req, res) => {
   try {
     const presupuestos = await obtenerTodosLosPresupuestosService();
@@ -16,7 +16,7 @@ export const obtenerTodosLosPresupuestos = async (req, res) => {
   }
 };
 
-// Obtener presupuesto por id
+
 export const obtenerPresupuestoId = async (req, res) => {
   try {
     const presupuesto = await obtenerPresupuestoPorIdService(req.params.id);
@@ -31,7 +31,7 @@ export const obtenerPresupuestoId = async (req, res) => {
 };
 
 
-// Obtener presupuesto por evento
+
 export const obtenerPresupuestoEvento = async (req, res) => {
   try {
     const presupuesto = await obtenerPresupuestoPorEventoIdService(req.params.eventoId);
@@ -46,7 +46,7 @@ export const obtenerPresupuestoEvento = async (req, res) => {
   }
 };
 
-// Actualizar presupuesto completo
+
 export const actualizarPresupuesto = async (req, res) => {
   try {
     const id = req.params.id;

@@ -5,7 +5,7 @@ import {
 } from "../services/estadoService.js";
 import { obtenerEventoPorIdService} from "../services/eventoService.js";
 
-// Mostrar estado de un evento
+
 export const mostrarEstadoEventoView = async (req, res) => {
   try {
     const evento = await obtenerEventoPorIdService(req.params.eventoId);
@@ -25,7 +25,7 @@ export const mostrarEstadoEventoView = async (req, res) => {
 };
 
 
-// POST: actualizar estado de un evento
+// POST
 export const actualizarEstadoEventoView = async (req, res) => {
   try {
     const eventoId = req.params.eventoId;

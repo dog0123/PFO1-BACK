@@ -1,14 +1,14 @@
 // models/Cliente.js
 import mongoose from "mongoose";
 
-// Definimos cómo será cada cliente en la base de datos
+// cliente en la bd
 const clienteSchema = new mongoose.Schema({
-  nombre: { type: String, required: true },     // Nombre completo de persona o empresa
-  email: { type: String, required: true },      // Correo electrónico
-  telefono: { type: String, default: "" },      // Teléfono (opcional)
-  direccion: { type: String, default: "" },     // Dirección (opcional)
-  observaciones: { type: String, default: "" }  // Notas adicionales
+  nombre: { type: String, required: true },     
+  email: { type: String, required: true },      
+  telefono: { type: String, default: "" },      
+  direccion: { type: String, default: "" },     
+  observaciones: { type: String, default: "" }  
 }, { timestamps: true });
 
-// Exportamos el modelo
+
 export default mongoose.model("Cliente", clienteSchema);

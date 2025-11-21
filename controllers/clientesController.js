@@ -6,7 +6,6 @@ import {
   eliminarClienteService
 } from "../services/clienteService.js";
 
-// Listar todos los clientes
 export const listarClientes = async (req, res) => {
   try {
     const clientes = await obtenerTodosLosClientesService();
@@ -16,7 +15,6 @@ export const listarClientes = async (req, res) => {
   }
 };
 
-// Obtener un cliente por ID
 export const obtenerCliente = async (req, res) => {
   try {
     const cliente = await obtenerClientePorIdService(req.params.id);
@@ -27,7 +25,6 @@ export const obtenerCliente = async (req, res) => {
   }
 };
 
-// Crear un nuevo cliente
 export const crearCliente = async (req, res) => {
   try {
     const nuevoCliente = await crearClienteService(req.body);
@@ -37,7 +34,6 @@ export const crearCliente = async (req, res) => {
   }
 };
 
-// Actualizar un cliente existente
 export const actualizarCliente = async (req, res) => {
   try {
     const actualizado = await actualizarClienteService(req.params.id, req.body);
@@ -49,7 +45,6 @@ export const actualizarCliente = async (req, res) => {
   }
 };
 
-// Eliminar un cliente
 export const eliminarCliente = async (req, res) => {
   try {
     const eliminado = await eliminarClienteService(req.params.id);

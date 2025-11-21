@@ -6,7 +6,7 @@ import {
   actualizarReporteService,
 } from "../services/reporteService.js";
 
-// Obtener todos los reportes
+
 export const obtenerTodosLosReportes = async (req, res) => {
   try {
     const reportes = await obtenerTodosLosReportesService();
@@ -17,7 +17,7 @@ export const obtenerTodosLosReportes = async (req, res) => {
   }
 };
 
-// Obtener reporte por evento
+
 export const obtenerReportePorEvento = async (req, res) => {
   try {
     const eventoId = req.params.eventoId;
@@ -34,7 +34,7 @@ export const obtenerReportePorEvento = async (req, res) => {
   }
 };
 
-// Obtener reporte por id
+
 export const obtenerReportePorId = async (req, res) => {
   try {
     const id = req.params.id; // _id del reporte
@@ -51,7 +51,7 @@ export const obtenerReportePorId = async (req, res) => {
   }
 };
 
-// Actualizar reporte
+
 export const actualizarReporte = async (req, res) => {
   try {
     const id = req.params.id; // id del reporte

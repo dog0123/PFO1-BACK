@@ -3,7 +3,6 @@ import {
   actualizarEstadoService,
 } from "../services/estadoService.js";
 
-// Obtener estado por evento
 export const obtenerEstadoPorEvento = async (req, res) => {
   try {
     const eventoId = req.params.eventoId;
@@ -19,7 +18,7 @@ export const obtenerEstadoPorEvento = async (req, res) => {
   }
 };
 
-// Actualizar estado (y guardar estado previo en historial)
+// guardar estado previo en historial
 export const actualizarEstado = async (req, res) => {
   try {
     const id = req.params.id;
@@ -42,7 +41,7 @@ export const actualizarEstado = async (req, res) => {
 Estos metodos no se incluyeron en la version final porque la creacion y eliminacion de
 este modulo depende exclusivamente de la de el evento relacionado
 
-// Crear estado para un evento
+
 
 export const crearEstado = async (req, res) => {
   try {
@@ -57,7 +56,7 @@ export const crearEstado = async (req, res) => {
   }
 };
 
-// Eliminar estado
+
 export const eliminarEstado = async (req, res) => {
   try {
     const id = req.params.id;

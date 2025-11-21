@@ -7,7 +7,7 @@ import {
   eliminarTareaService
 } from "../services/tareaService.js";
 
-// Obtener todas las tareas
+
 export const obtenerTodasLasTareas = async (req, res) => {
   try {
     const tareas = await obtenerTodasLasTareasService();
@@ -18,7 +18,7 @@ export const obtenerTodasLasTareas = async (req, res) => {
   }
 };
 
-// Obtener tarea por ID
+
 export const obtenerTareaPorId = async (req, res) => {
   try {
     const id = req.params.id;
@@ -35,7 +35,7 @@ export const obtenerTareaPorId = async (req, res) => {
   }
 };
 
-// Obtener tareas por evento
+
 export const obtenerTareasPorEvento = async (req, res) => {
   try {
     const eventoId = req.params.eventoId;
@@ -48,7 +48,7 @@ export const obtenerTareasPorEvento = async (req, res) => {
   }
 };
 
-// Crear nueva tarea
+
 export const crearTarea = async (req, res) => {
   try {
     const data = req.body;
@@ -62,7 +62,7 @@ export const crearTarea = async (req, res) => {
   }
 };
 
-// Actualizar tarea
+
 export const actualizarTarea = async (req, res) => {
   try {
     const id = req.params.id;
@@ -81,7 +81,7 @@ export const actualizarTarea = async (req, res) => {
   }
 };
 
-// Eliminar tarea
+
 export const eliminarTarea = async (req, res) => {
   try {
     const id = req.params.id;

@@ -6,7 +6,7 @@ import {
   eliminarProveedorService
 } from "../services/proveedorService.js";
 
-// Listar todos los proveedores
+
 export const listarProveedores = async (req, res) => {
   try {
     const proveedores = await obtenerTodosLosProveedoresService();
@@ -16,7 +16,7 @@ export const listarProveedores = async (req, res) => {
   }
 };
 
-// Obtener un proveedor por ID
+// por ID
 export const obtenerProveedor = async (req, res) => {
   try {
     const proveedor = await obtenerProveedorPorIdService(req.params.id);
@@ -29,7 +29,7 @@ export const obtenerProveedor = async (req, res) => {
   }
 };
 
-// Crear un proveedor
+
 export const crearProveedor = async (req, res) => {
   try {
     const nuevoProveedor = await crearProveedorService(req.body);
@@ -39,7 +39,7 @@ export const crearProveedor = async (req, res) => {
   }
 };
 
-// Actualizar un proveedor
+
 export const actualizarProveedor = async (req, res) => {
   try {
     const actualizado = await actualizarProveedorService(req.params.id, req.body);
@@ -52,7 +52,7 @@ export const actualizarProveedor = async (req, res) => {
   }
 };
 
-// Eliminar un proveedor
+
 export const eliminarProveedor = async (req, res) => {
   try {
     const eliminado = await eliminarProveedorService(req.params.id);

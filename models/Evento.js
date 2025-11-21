@@ -3,9 +3,9 @@ import mongoose from "mongoose";
 
 // Estructura de un evento
 const eventoSchema = new mongoose.Schema({
-  nombre: { type: String, required: true },         // Nombre del evento (por ej: Casamiento de ...)
-  fecha: { type: Date, required: true },            // Fecha del evento
-  lugar: { type: String, required: true },          // Lugar o salón donde se realiza
+  nombre: { type: String, required: true },      
+  fecha: { type: Date, required: true },           
+  lugar: { type: String, required: true },       
 
   // Relaciones con otros módulos:
   clienteId: {
@@ -56,5 +56,5 @@ clienteBackup: {
   }
 });
 
-// Exportamos el modelo
+
 export default mongoose.model("Evento", eventoSchema);

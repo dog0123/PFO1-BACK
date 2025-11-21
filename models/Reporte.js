@@ -1,9 +1,9 @@
 // models/Reporte.js
 import mongoose from "mongoose";
 
-// Definimos el esquema de cómo será cada documneto "Reporte"
+
 const reporteSchema = new mongoose.Schema({
-  encabezado: { type: String, default: "Sin reporte" },     // Titulo que representa el estado del reporte
+  encabezado: { type: String, default: "Sin reporte" },     
   reporte: { type: String, default: ""},                        // El reporte en si
   encuestasDeSatisfaccion: { type: [Object], default: []},      // Encuestas recibidas de los participantes del evento
   feedbackSupervisorDeEvento: { type: String, default: "" },         // Devolucion del supervisor del evento

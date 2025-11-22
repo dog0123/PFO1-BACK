@@ -29,33 +29,35 @@ import {
   eliminarEvento
 } from "../controllers/eventosController.js";
 
+import { isAuthenticated } from "./index.js";
+
 const router = express.Router();
 
 // VISTA HTML (Pug)
-router.get("/vista", listarEventosView);
-router.get("/vista/nuevo", mostrarFormularioNuevoEventoView);
-router.get("/vista/:id", verDetalleEventoView)
-router.post("/vista", crearEventoView);
-router.put("/vista/:id", actualizarEventoView);
-router.delete("/vista/:id", eliminarEventoView)
+router.get("/vista", isAuthenticated, listarEventosView);
+router.get("/vista/nuevo", isAuthenticated, mostrarFormularioNuevoEventoView);
+router.get("/vista/:id", isAuthenticated, verDetalleEventoView)
+router.post("/vista", isAuthenticated, crearEventoView);
+router.put("/vista/:id", isAuthenticated, actualizarEventoView);
+router.delete("/vista/:id", isAuthenticated, eliminarEventoView)
 
 // Mostrar formulario para seleccionar un nuevo cliente
-router.get("/vista/:id/cliente", seleccionarClienteView);
-router.post("/vista/:id/cliente", actualizarClienteEventoView);
+router.get("/vista/:id/cliente", isAuthenticated, seleccionarClienteView);
+router.post("/vista/:id/cliente", isAuthenticated, actualizarClienteEventoView);
 
 // Mostrar estado del evento
-router.get("/vista/:id/estado", mostrarEstadoDeEventoView)
-router.post("/vista/:id/estado", actualizarEstadoDeEventoView)
+router.get("/vista/:id/estado", isAuthenticated, mostrarEstadoDeEventoView)
+router.post("/vista/:id/estado", isAuthenticated, actualizarEstadoDeEventoView)
 
 // Mostrar proveedores del evento
-router.get("/vista/:id/proveedores", vistaProveedoresEventoView);
-router.post("/vista/:id/proveedores", agregarProveedorEventoView)
-router.delete("/vista/:id/proveedores/:proveedorId/:nombreMostrar", quitarProveedorEventoView);
+router.get("/vista/:id/proveedores", isAuthenticated, vistaProveedoresEventoView);
+router.post("/vista/:id/proveedores", isAuthenticated, agregarProveedorEventoView)
+router.delete("/vista/:id/proveedores/:proveedorId/:nombreMostrar", isAuthenticated, quitarProveedorEventoView);
 
 // Mostrar los invitados de un evento
-router.get("/vista/:id/invitados", mostrarInvitadosView);
-router.post("/vista/:id/invitados", agregarInvitadoView);
-router.delete("/vista/:eventoId/invitados/:index", eliminarInvitadoView);
+router.get("/vista/:id/invitados", isAuthenticated, mostrarInvitadosView);
+router.post("/vista/:id/invitados", isAuthenticated, agregarInvitadoView);
+router.delete("/vista/:eventoId/invitados/:index", isAuthenticated, eliminarInvitadoView);
 
 
 // CRUD principal

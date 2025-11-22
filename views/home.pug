@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .container.text-center.mt-5
+    h1.text-primary.mb-4 Bienvenido a Eventify 
+    p.lead Gestioná eventos, invitados, presupuestos y tareas desde un solo lugar.
+
+    //- Botones principales 
+    .d-grid.gap-3.col-6.mx-auto.mt-5
+      a.btn.btn-outline-primary.btn-lg(href="/eventos/vista") Eventos
+      a.btn.btn-outline-success.btn-lg(href="/clientes/vista") Clientes
+      a.btn.btn-outline-warning.btn-lg(href="/proveedores/vista") Proveedores
+      a.btn.btn-outline-info.btn-lg(href="/tareas/vista") Tareas
+      a.btn.btn-outline-dark.btn-lg(href="/presupuestos/vista") Presupuestos
+      a.btn.btn-outline-secondary.btn-lg(href="/reportes/vista") Reportes
+      if user && user.role === "admin"
+        a.btn.btn-outline-danger.btn-lg(href="/signup") Agregar nuevo usuario
+
+    hr.mt-5
+    p.text-muted.mt-3 Creado por el equipo PF01 - Grupo 19

@@ -16,6 +16,8 @@ import {
   agregarEncuestaView
 } from "../controllers/reportesViewsController.js";
 
+import { isAuthenticated } from "./index.js";
+
 const router = express.Router();
 
 router.get("/api", obtenerTodosLosReportes);
@@ -24,11 +26,11 @@ router.get("/api/evento/:eventoId", obtenerReportePorEvento);
 router.put("/api/:id", actualizarReporte);
 
 
-router.get("/vista", listarReportesView);
-router.get("/vista/:id", verReporteView);
-router.get("/vista/:id/editar", editarReporteFormView);
-router.put("/vista/:id", actualizarReporteView);
-router.get("/vista/:id/encuesta", verFormEncuestaView);
-router.post("/vista/:id/encuesta", agregarEncuestaView);
+router.get("/vista", isAuthenticated, listarReportesView);
+router.get("/vista/:id", isAuthenticated, verReporteView);
+router.get("/vista/:id/editar", isAuthenticated, editarReporteFormView);
+router.put("/vista/:id", isAuthenticated, actualizarReporteView);
+router.get("/vista/:id/encuesta", isAuthenticated, verFormEncuestaView);
+router.post("/vista/:id/encuesta", isAuthenticated, agregarEncuestaView);
 
 export default router;

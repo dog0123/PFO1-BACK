@@ -18,15 +18,17 @@ import {
   eliminarTareaView
 } from "../controllers/tareasViewsController.js";
 
+import { isAuthenticated } from "./index.js";
+
 const router = express.Router();
 
-router.get("/vista", mostrarTareasVistaView);
-router.get("/vista/nueva", mostrarFormularioNuevaView);
-router.post("/vista", crearTareaView);
-router.get("/vista/:id", verTareaView);
-router.get("/vista/:id/editar", mostrarFormularioEditarView);
-router.put("/vista/:id", actualizarTareaView);
-router.delete("/vista/:id", eliminarTareaView);
+router.get("/vista", isAuthenticated, mostrarTareasVistaView);
+router.get("/vista/nueva", isAuthenticated, mostrarFormularioNuevaView);
+router.post("/vista", isAuthenticated, crearTareaView);
+router.get("/vista/:id", isAuthenticated, verTareaView);
+router.get("/vista/:id/editar", isAuthenticated, mostrarFormularioEditarView);
+router.put("/vista/:id", isAuthenticated, actualizarTareaView);
+router.delete("/vista/:id", isAuthenticated, eliminarTareaView);
 
 router.get("/", obtenerTodasLasTareas);
 router.get("/:id", obtenerTareaPorId);

@@ -17,16 +17,18 @@ import {
   eliminarCliente
 } from "../controllers/clientesController.js";
 
+import { isAuthenticated } from "./index.js";
+
 const router = express.Router();
 
 // VIEWS
-router.get("/vista", listarClientesView);
-router.get("/vista/nuevo", mostrarFormularioNuevoCliente);
-router.post("/vista", crearClienteView);
-router.get("/vista/:id", verClienteView);
-router.get("/vista/:id/editar", editarClienteView);
-router.put("/vista/:id", actualizarClienteView);
-router.delete("/vista/:id", eliminarClienteView);
+router.get("/vista", isAuthenticated, listarClientesView);
+router.get("/vista/nuevo", isAuthenticated, mostrarFormularioNuevoCliente);
+router.post("/vista", isAuthenticated, crearClienteView);
+router.get("/vista/:id", isAuthenticated, verClienteView);
+router.get("/vista/:id/editar", isAuthenticated, editarClienteView);
+router.put("/vista/:id", isAuthenticated, actualizarClienteView);
+router.delete("/vista/:id", isAuthenticated, eliminarClienteView);
 
 // API
 router.get("/", listarClientes);

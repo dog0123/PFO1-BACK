@@ -18,15 +18,17 @@ import {
   vistaEliminarProveedorView
 } from "../controllers/proveedoresViewsController.js";
 
+import { isAuthenticated } from "./index.js";
+
 const router = express.Router();
 
-router.get("/vista", vistaListarProveedoresView);
-router.get("/vista/nuevo", vistaNuevoProveedorView);
-router.post("/vista", vistaCrearProveedorView);
-router.get("/vista/:id", vistaVerProveedorView);
-router.get("/vista/:id/editar", vistaEditarProveedorView);
-router.put("/vista/:id", vistaActualizarProveedorView);
-router.delete("/vista/:id", vistaEliminarProveedorView);
+router.get("/vista", isAuthenticated, vistaListarProveedoresView);
+router.get("/vista/nuevo", isAuthenticated, vistaNuevoProveedorView);
+router.post("/vista", isAuthenticated, vistaCrearProveedorView);
+router.get("/vista/:id", isAuthenticated, vistaVerProveedorView);
+router.get("/vista/:id/editar", isAuthenticated, vistaEditarProveedorView);
+router.put("/vista/:id", isAuthenticated, vistaActualizarProveedorView);
+router.delete("/vista/:id", isAuthenticated, vistaEliminarProveedorView);
 
 router.get("/", listarProveedores);
 router.get("/:id", obtenerProveedor);

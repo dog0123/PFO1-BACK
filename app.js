@@ -3,8 +3,14 @@
 import express from 'express';
 import 'dotenv/config'; // carga variables del archivo .env
 import connectDB from './config/mongo.js'; // conexión a Mongo
-import db from './config/db.js'; // conexión antigua JSON (para compatibilidad)
+import createAdminIfNotExists from './config/adminInit.js';
 import methodOverride from "method-override";
+
+import session from "express-session";
+import flash from "connect-flash";
+import passport from "passport";
+import initPassport from "./passport/init.js";
+import authRoutes from "./routes/index.js";
 
 
 // Importa las rutas de TODOS los módulos hechos
@@ -31,12 +37,35 @@ app.set('views', './views');
 // Verifica si se debe conectar a Mongo o seguir con JSON
 if (process.env.USE_MONGO === 'true') {
   await connectDB(); // usa tu config/mongo.js
+  createAdminIfNotExists();
   console.log('Conectado a MongoDB con Mongoose');
 } else {
   console.log('Usando base de datos local JSON (modo compatibilidad)');
 }
 
-// Rutas principales (usar Mongo o JSON según el módulo, hasta tanto pasemos todo)
+app.use(
+  session({
+    secret: "mySecretKey",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+initPassport(passport);
+
+// Middleware global antes de cualquier ruta
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
+// Rutas de autenticación
+app.use("/", authRoutes(passport));
+
+// Rutas principales
 app.use('/proveedores', proveedorRoutes);
 app.use('/eventos', eventoRoutes);
 app.use('/presupuestos', presupuestoRoutes);
@@ -44,12 +73,6 @@ app.use('/tareas', tareasRoutes);
 app.use('/clientes', clienteRoutes);
 app.use("/estados", estadoRoutes);
 app.use("/reportes", reporteRoutes);
-
-
-// Ruta raíz
-app.get('/', (req, res) => {
-  res.render('index', { titulo: 'Eventify - Gestión de eventos' });
-});
 
 // Middleware de errores
 app.use((err, req, res, next) => {

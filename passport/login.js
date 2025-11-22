@@ -19,14 +19,14 @@ export default function (passport) {
           });
 
           if (!user) {
-            console.log("User not found: " + usernameEmail);
-            return done(null, false, req.flash("message", "User not found"));
+            console.log("Usuario no encontrado: " + usernameEmail);
+            return done(null, false, req.flash("message", "Datos incorrectos"));
           }
 
           const valid = bcrypt.compareSync(password, user.password);
           if (!valid) {
             console.log("Invalid password");
-            return done(null, false, req.flash("message", "Invalid password"));
+            return done(null, false, req.flash("message", "Datos incorrectos"));
           }
 
           return done(null, user);

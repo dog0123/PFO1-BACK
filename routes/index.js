@@ -19,13 +19,14 @@ export function isAdmin(req, res, next) {
 export default (passport) => {
   // GET Login Page
   router.get("/", (req, res) => {
-    res.render("index", { message: req.flash("message") });
-  });
+  res.render("index", { message: req.flash("message") });
+});
+
 
   // Handle Login POST
   router.post(
   "/login",
-  passport.authenticate("login", { failureRedirect: "/login" }),
+  passport.authenticate("login", { failureRedirect: "/", failureFlash: true }),
   (req, res) => {
     return res.redirect("/home");
   }

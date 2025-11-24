@@ -116,9 +116,11 @@ Las siguientes imágenes presentan la aplicación ya desplegada en Render, junto
 <table>
   <tr>
     <td align="left">
-      <figure>
+      <figure style="margin:0;">
         <img src="https://github.com/user-attachments/assets/6a5279be-d16c-4433-a765-6008f97cc3c6" width="420" alt="Login de la aplicación" />
-        <figcaption><em>Login de la aplicación.</em></figcaption>
+        <figcaption style="font-style:italic; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:420px;">
+          Login de la aplicación.
+        </figcaption>
       </figure>
     </td>
     <td align="left">
@@ -131,9 +133,11 @@ Las siguientes imágenes presentan la aplicación ya desplegada en Render, junto
 
   <tr>
     <td align="left">
-      <figure>
+      <figure style="margin:0;">
         <img src="https://github.com/user-attachments/assets/7cf2e98b-1594-43f1-9bbe-788d67af46d5" width="420" alt="Lista de eventos" />
-        <figcaption><em>Lista general de los eventos.</em></figcaption>
+        <figcaption style="font-style:italic; margin-top:6px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:420px;">
+          Lista general de los eventos
+        </figcaption>
       </figure>
     </td>
     <td align="left">

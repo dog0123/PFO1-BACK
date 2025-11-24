@@ -1,7 +1,7 @@
 // passport/init.js
 import login from "./login.js";
 import signup from "./signup.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export default function (passport) {
   passport.serializeUser((user, done) => {

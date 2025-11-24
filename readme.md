@@ -1,5 +1,5 @@
-# PFO 2
-**Nombre de la materia: Desarrollo Backend**  
+# Eventify – Sistema de Gestión de Eventos
+**Desarrollo Backend - Entrega Final**  
 **Comisión: A**  
 **Profesor: Emir Eliezer Garcia Ontiveros**  
 **Grupo 19**  
@@ -9,8 +9,18 @@
 
 ## Proyecto: CRUD para Proveedores, Eventos y Presupuestos
 
+Esta una aplicación web diseñada para centralizar y optimizar la gestión de eventos de la empresa de eventos Eventify.
+Permite administrar clientes, proveedores, tareas, presupuestos, estados y reportes, integrando toda la información necesaria.
 Este proyecto implementa un **API REST** para gestionar proveedores, eventos y los presupuestos asociados de una empresa de eventos.  
-Está construido con **Node.js** y **Express**, utilizando un archivo `basedatos.json` como "base de datos" persistente (más adelante intentaremos Mongo).  
+Está construido con:
+- **Node.js** y **Express**,
+- **MongoDB** y **Mongoose**,
+- Patrón MVC con capas de servicio,
+- Motor de plantillas **PUG**,
+- **Bootstrap** para UI,
+- Autenticación y roles (Admin / User)
+
+---
 
 ### Estructura del proyecto
 - **models/** → define las entidades `Proveedor` y `Evento`.  
@@ -21,6 +31,8 @@ Está construido con **Node.js** y **Express**, utilizando un archivo `basedatos
 - **app.js** → archivo principal que corre al servidor.  
 
 ---
+
+
 
 ## Instalación y ejecución
 1. Instalar dependencias:  

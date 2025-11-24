@@ -115,13 +115,13 @@ Las siguientes imágenes presentan la aplicación ya desplegada en Render, junto
 
 <table>
   <tr>
-    <td align="center">
+    <td align="left">
       <figure>
         <img src="https://github.com/user-attachments/assets/6a5279be-d16c-4433-a765-6008f97cc3c6" width="420" alt="Login de la aplicación" />
         <figcaption><em>Login de la aplicación.</em></figcaption>
       </figure>
     </td>
-    <td align="center">
+    <td align="left">
       <figure>
         <img src="https://github.com/user-attachments/assets/4f5137ef-df51-4530-aa9c-02f696093b31" width="420" alt="Pantalla principal" />
         <figcaption><em>Pantalla principal de la aplicación.</em></figcaption>
@@ -130,13 +130,13 @@ Las siguientes imágenes presentan la aplicación ya desplegada en Render, junto
   </tr>
 
   <tr>
-    <td align="center">
+    <td align="left">
       <figure>
         <img src="https://github.com/user-attachments/assets/7cf2e98b-1594-43f1-9bbe-788d67af46d5" width="420" alt="Lista de eventos" />
         <figcaption><em>Lista general de los eventos.</em></figcaption>
       </figure>
     </td>
-    <td align="center">
+    <td align="left">
       <figure>
         <img src="https://github.com/user-attachments/assets/2ec826f4-1852-487c-bdad-4180dd999dfb" width="420" alt="Detalle de cliente" />
         <figcaption><em>Vista de detalle de un cliente.</em></figcaption>
@@ -145,7 +145,7 @@ Las siguientes imágenes presentan la aplicación ya desplegada en Render, junto
   </tr>
 
   <tr>
-    <td align="center">
+    <td align="left">
       <figure>
         <img src="https://github.com/user-attachments/assets/bce49829-4c86-4704-b87a-8f11a65b3b87" width="420" alt="Formulario nuevo usuario" />
         <figcaption><em>Formulario para registrar un nuevo usuario.</em></figcaption>
